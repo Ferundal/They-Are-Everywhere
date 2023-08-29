@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 286999891}
   m_Layer: 0
-  m_Name: RightBarelMuzzle
+  m_Name: LeftBarelMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 701380118}
   m_Layer: 0
-  m_Name: LeftBarrelMuzzle
+  m_Name: RightBarrelMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,8 @@ GameObject:
   m_Component:
   - component: {fileID: 340695660937559506}
   - component: {fileID: 933337927}
-  - component: {fileID: 5102075121595128316}
+  - component: {fileID: 727068828}
+  - component: {fileID: 727068829}
   m_Layer: 0
   m_Name: TwoBarrelCannon
   m_TagString: Untagged
@@ -109,16 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af243e055c7a374fa35d56d756bdd30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turret: {fileID: 340695661977864175}
-  movementOnYAxis: 0
-  movementOnXAxis: 0
-  _xRotation: 0
-  _yRotation: 0
-  _xMaxRotation: 310
-  _yMaxRotation: 310
-  _xMinRotation: 15
-  _yMinRotation: 50
---- !u!114 &5102075121595128316
+  cannon: {fileID: 727068829}
+--- !u!114 &727068828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,14 +120,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 340695660937559507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ccff4754fc35ff4b8934f03e288914d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2443eec20b365ae4fbbd2b8c0181a4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftMuzzle: {fileID: 701380118}
-  rightMuzzle: {fileID: 286999891}
+  lineSegments: 60
+  timeOfTheFlight: 3
+--- !u!114 &727068829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340695660937559507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 404cbc6ffae28374bb75e2a0ee5d4976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turret: {fileID: 340695661977864175}
+  movementOnYAxis: 0
+  movementOnXAxis: 0
+  _xRotation: 0
+  _yRotation: 0
+  _xMaxRotation: 10
+  _yMaxRotation: 50
+  _xMinRotation: -50
+  _yMinRotation: -50
+  leftMuzzle: {fileID: 286999891}
+  rightMuzzle: {fileID: 701380118}
   cannonBall: {fileID: 4827967118232220756, guid: 519bc94f58438bc488ab9cd410d85657,
     type: 3}
-  force: 3
+  cannonBallMass: 30
+  force: 1000
+  offSet: 0.5
+  leftLineRenderer: {fileID: 0}
+  rightLineRenderer: {fileID: 0}
+  trajectoryLine: {fileID: 727068828}
 --- !u!1 &340695661566009158
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +267,7 @@ GameObject:
   - component: {fileID: 340695661789334166}
   - component: {fileID: 340695661789334167}
   m_Layer: 0
-  m_Name: RightBarrel
+  m_Name: LeftBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -444,7 +465,7 @@ GameObject:
   - component: {fileID: 340695662418803705}
   - component: {fileID: 340695662418803706}
   m_Layer: 0
-  m_Name: LeftBarrel
+  m_Name: RightBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -53,6 +53,15 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotation"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""d967e2bc-9f1d-40a8-9e47-c94e550413f2"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,61 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""d7bdf84f-95c5-4fd6-999b-a2bd4686b0f1"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""0b8f426a-7532-4612-bf31-b866da53ae56"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""fa52751d-1960-4105-99b3-7151ced69a3e"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""0f3929b9-7140-4c38-896f-d698c43abe40"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""189282b7-9f66-49f0-84ad-8dd3b3fe5a5f"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -143,6 +207,7 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
         m_Movement_UpDownRotation = m_Movement.FindAction("Up/Down Rotation", throwIfNotFound: true);
         m_Movement_LeftRightRotation = m_Movement.FindAction("Left/Right Rotation", throwIfNotFound: true);
         m_Movement_Shoot = m_Movement.FindAction("Shoot", throwIfNotFound: true);
+        m_Movement_Rotation = m_Movement.FindAction("Rotation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,6 +270,7 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_UpDownRotation;
     private readonly InputAction m_Movement_LeftRightRotation;
     private readonly InputAction m_Movement_Shoot;
+    private readonly InputAction m_Movement_Rotation;
     public struct MovementActions
     {
         private @CannonController m_Wrapper;
@@ -212,6 +278,7 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
         public InputAction @UpDownRotation => m_Wrapper.m_Movement_UpDownRotation;
         public InputAction @LeftRightRotation => m_Wrapper.m_Movement_LeftRightRotation;
         public InputAction @Shoot => m_Wrapper.m_Movement_Shoot;
+        public InputAction @Rotation => m_Wrapper.m_Movement_Rotation;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -230,6 +297,9 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnShoot;
+                @Rotation.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnRotation;
+                @Rotation.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnRotation;
+                @Rotation.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnRotation;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -243,6 +313,9 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @Rotation.started += instance.OnRotation;
+                @Rotation.performed += instance.OnRotation;
+                @Rotation.canceled += instance.OnRotation;
             }
         }
     }
@@ -252,5 +325,6 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
         void OnUpDownRotation(InputAction.CallbackContext context);
         void OnLeftRightRotation(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnRotation(InputAction.CallbackContext context);
     }
 }
