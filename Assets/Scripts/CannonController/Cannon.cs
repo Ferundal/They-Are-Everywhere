@@ -57,10 +57,12 @@ public class Cannon : MonoBehaviour, IWeapon
             lastShoot = Time.time;
             GameObject ball1 = Instantiate(cannonBall, leftMuzzle.position, leftMuzzle.rotation);
             GameObject ball2 = Instantiate(cannonBall, rightMuzzle.position, rightMuzzle.rotation);
-            ball1.GetComponent<Rigidbody>().mass = cannonBallMass;
-            ball1.GetComponent<Rigidbody>().AddForce(leftMuzzle.up * force, ForceMode.Impulse);
-            ball2.GetComponent<Rigidbody>().mass = cannonBallMass;
-            ball2.GetComponent<Rigidbody>().AddForce(rightMuzzle.up * force, ForceMode.Impulse);
+            var rb1 = ball1.GetComponent<Rigidbody>();
+            var rb2 = ball2.GetComponent<Rigidbody>();
+            rb1.mass = cannonBallMass;
+            rb2.mass = cannonBallMass;
+            rb1.AddForce(leftMuzzle.up * force, ForceMode.Impulse);
+            rb2.AddForce(rightMuzzle.up * force, ForceMode.Impulse);
         }
     }
 }

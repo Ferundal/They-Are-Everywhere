@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,16 +11,16 @@ public class TrajectoryLine : MonoBehaviour
     {
         float timeStep = timeOfTheFlight / lineSegments;
 
-        Vector3[] lineRendererPoints = CalculateTrajectory(startPoint, startVelocity, timeStep, lineRenderer);
+        List<Vector3> lineRendererPoints = CalculateTrajectory(startPoint, startVelocity, timeStep, lineRenderer);
         lineRenderer.positionCount = lineRendererPoints.Count();
-        lineRenderer.SetPositions(lineRendererPoints);
+        lineRenderer.SetPositions(lineRendererPoints.ToArray());
     }
 
-    private Vector3[] CalculateTrajectory(Vector3 startPoint, Vector3 startVelocity, float timeStep, LineRenderer lineRenderer)
+    private List<Vector3> CalculateTrajectory(Vector3 startPoint, Vector3 startVelocity, float timeStep, LineRenderer lineRenderer)
     {
-        Vector3[] lineRendererPoints = new Vector3[lineSegments];
+        List<Vector3> lineRendererPoints = new List<Vector3>();
 
-        lineRendererPoints[0] = startPoint;
+        lineRendererPoints.Add(startPoint);
 
         for (int i = 1; i < lineSegments; i++)
         {
@@ -32,11 +33,11 @@ public class TrajectoryLine : MonoBehaviour
 
             if (Physics.Raycast(lineRendererPoints[i - 1], newPos - lineRendererPoints[i - 1], out hit, (newPos - lineRendererPoints[i - 1]).magnitude))
             {
-                lineRendererPoints[i] = hit.point;
-                return lineRendererPoints;
+                lineRendererPoints.Add(hit.point);
+                break;
             }
 
-            lineRendererPoints[i] = newPos;
+            lineRendererPoints.Add(newPos);
         }
 
         return lineRendererPoints;
