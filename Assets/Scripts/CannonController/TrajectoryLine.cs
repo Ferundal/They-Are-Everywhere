@@ -33,8 +33,11 @@ public class TrajectoryLine : MonoBehaviour
 
             if (Physics.Raycast(lineRendererPoints[i - 1], newPos - lineRendererPoints[i - 1], out hit, (newPos - lineRendererPoints[i - 1]).magnitude))
             {
-                lineRendererPoints.Add(hit.point);
-                break;
+                if (!hit.transform.CompareTag("CannonBall"))
+                {
+                    lineRendererPoints.Add(hit.point);
+                    break;
+                }
             }
 
             lineRendererPoints.Add(newPos);

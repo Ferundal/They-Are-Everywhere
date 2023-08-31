@@ -33,6 +33,7 @@ public class Cannon : MonoBehaviour, IWeapon
         leftLineRenderer.gameObject.SetActive(true);
         rightLineRenderer.gameObject.SetActive(true);
     }
+
     public void Rotate(Vector2 input)
     {
         _xRotation = turret.transform.eulerAngles.x;
@@ -55,14 +56,32 @@ public class Cannon : MonoBehaviour, IWeapon
         if (isShooting && Time.time >= lastShoot + offSet)
         {
             lastShoot = Time.time;
-            GameObject ball1 = Instantiate(cannonBall, leftMuzzle.position, leftMuzzle.rotation);
-            GameObject ball2 = Instantiate(cannonBall, rightMuzzle.position, rightMuzzle.rotation);
+            GameObject ball1 = CannonBallPool.instance.GetPooledObject();
+            
+            if (ball1 != null)
+            {
+                ball1.transform.position = leftMuzzle.position;
+                ball1.transform.rotation = leftMuzzle.rotation;
+                ball1.gameObject.SetActive(true);
+                ball1.GetComponent<MeshRenderer>().enabled = true;
+            }
+            GameObject ball2 = CannonBallPool.instance.GetPooledObject();
+
+            if (ball2 != null)
+            {
+                ball2.transform.position = rightMuzzle.position;
+                ball2.transform.rotation = rightMuzzle.rotation;
+                ball2.gameObject.SetActive(true);
+                ball2.GetComponent<MeshRenderer>().enabled = true;
+            }
             var rb1 = ball1.GetComponent<Rigidbody>();
             var rb2 = ball2.GetComponent<Rigidbody>();
             rb1.mass = cannonBallMass;
             rb2.mass = cannonBallMass;
             rb1.AddForce(leftMuzzle.up * force, ForceMode.Impulse);
             rb2.AddForce(rightMuzzle.up * force, ForceMode.Impulse);
+            StartCoroutine(ball1.GetComponent<CannonBallExplosion>().DestroyBall(3f));
+            StartCoroutine(ball2.GetComponent<CannonBallExplosion>().DestroyBall(3f));
         }
     }
 }

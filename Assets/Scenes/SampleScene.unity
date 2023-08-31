@@ -148,7 +148,7 @@ PrefabInstance:
     - target: {fileID: 3907871812116557302, guid: 9629406046e6b5948ac4d3af66cd6649,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.885
+      value: -14.109999
       objectReference: {fileID: 0}
     - target: {fileID: 3907871812116557302, guid: 9629406046e6b5948ac4d3af66cd6649,
         type: 3}
@@ -455,7 +455,7 @@ PrefabInstance:
     - target: {fileID: 3907871812116557302, guid: 9629406046e6b5948ac4d3af66cd6649,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.885
+      value: -14.11
       objectReference: {fileID: 0}
     - target: {fileID: 3907871812116557302, guid: 9629406046e6b5948ac4d3af66cd6649,
         type: 3}
@@ -465,7 +465,7 @@ PrefabInstance:
     - target: {fileID: 3907871812116557302, guid: 9629406046e6b5948ac4d3af66cd6649,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.94
+      value: -2.29
       objectReference: {fileID: 0}
     - target: {fileID: 3907871812116557302, guid: 9629406046e6b5948ac4d3af66cd6649,
         type: 3}
@@ -583,6 +583,7 @@ GameObject:
   - component: {fileID: 1435595389}
   - component: {fileID: 1435595388}
   - component: {fileID: 1435595387}
+  - component: {fileID: 1435595391}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -669,6 +670,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1435595391
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435595386}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1795766571
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +808,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TwoBarrelCannon
+      objectReference: {fileID: 0}
+    - target: {fileID: 340695661789334161, guid: 0c641562f091769429dbde01f0ef5c81,
+        type: 3}
+      propertyPath: m_TagString
+      value: Barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 340695662418803684, guid: 0c641562f091769429dbde01f0ef5c81,
+        type: 3}
+      propertyPath: m_TagString
+      value: Barrel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c641562f091769429dbde01f0ef5c81, type: 3}
