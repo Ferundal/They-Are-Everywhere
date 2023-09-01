@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Cannon : MonoBehaviour, IWeapon
@@ -5,14 +6,11 @@ public class Cannon : MonoBehaviour, IWeapon
     [Header("Rotations")]
 
     [SerializeField] private GameObject turret;
-    [SerializeField] private float movementOnYAxis;
-    [SerializeField] private float movementOnXAxis;
-    [SerializeField] private float _xRotation;
-    [SerializeField] private float _yRotation;
     [SerializeField] private float _xMaxRotation = 10f;
     [SerializeField] private float _yMaxRotation = 50f;
     [SerializeField] private float _xMinRotation = -50f;
     [SerializeField] private float _yMinRotation = -50f;
+    [SerializeField] private float rotationSpeed = 35f;
 
     [Header("Shooting")]
 
@@ -25,6 +23,7 @@ public class Cannon : MonoBehaviour, IWeapon
     [SerializeField] private LineRenderer leftLineRenderer;
     [SerializeField] private LineRenderer rightLineRenderer;
     [SerializeField] private TrajectoryLine trajectoryLine;
+    [SerializeField] private GameObject smokeEffect;
 
     private float lastShoot;
 
@@ -36,13 +35,14 @@ public class Cannon : MonoBehaviour, IWeapon
 
     public void Rotate(Vector2 input)
     {
-        _xRotation = turret.transform.eulerAngles.x;
-        _yRotation = turret.transform.eulerAngles.y;
+        float _xRotation = turret.transform.eulerAngles.x;
+        float _yRotation = turret.transform.eulerAngles.y;
 
-        _xRotation = turret.transform.eulerAngles.x + input.x;
+        input = input * rotationSpeed * Time.deltaTime;
+        _xRotation = turret.transform.eulerAngles.x + (-input.y);
         _xRotation = (_xRotation > 180) ? _xRotation - 360 : _xRotation;
         _xRotation = Mathf.Clamp(_xRotation, _xMinRotation, _xMaxRotation);
-        _yRotation = turret.transform.eulerAngles.y + input.y;
+        _yRotation = turret.transform.eulerAngles.y + input.x;
         _yRotation = (_yRotation > 180) ? _yRotation - 360 : _yRotation;
         _yRotation = Mathf.Clamp(_yRotation, _yMinRotation, _yMaxRotation);
         turret.transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
@@ -56,6 +56,10 @@ public class Cannon : MonoBehaviour, IWeapon
         if (isShooting && Time.time >= lastShoot + offSet)
         {
             lastShoot = Time.time;
+            GameObject smoke1 = Instantiate(smokeEffect, leftMuzzle.transform.position, smokeEffect.gameObject.transform.rotation);
+            GameObject smoke2 = Instantiate(smokeEffect, leftMuzzle.transform.position, smokeEffect.gameObject.transform.rotation);
+            StartCoroutine(DestroySmoke(smoke1));
+            StartCoroutine(DestroySmoke(smoke2));
             GameObject ball1 = CannonBallPool.instance.GetPooledObject();
             
             if (ball1 != null)
@@ -83,5 +87,14 @@ public class Cannon : MonoBehaviour, IWeapon
             StartCoroutine(ball1.GetComponent<CannonBallExplosion>().DestroyBall(3f));
             StartCoroutine(ball2.GetComponent<CannonBallExplosion>().DestroyBall(3f));
         }
+    }
+
+    private IEnumerator DestroySmoke(GameObject smoke)
+    {
+        ParticleSystem parts = smoke.GetComponent<ParticleSystem>();
+        float totalDuration = parts.duration + parts.startLifetime;
+
+        yield return new WaitForSeconds(totalDuration);
+        Destroy(smoke);
     }
 }

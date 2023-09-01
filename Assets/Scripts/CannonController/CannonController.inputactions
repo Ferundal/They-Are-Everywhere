@@ -6,24 +6,6 @@
             "id": "1c5d45e9-579d-484c-a23d-745717938b49",
             "actions": [
                 {
-                    "name": "Up/Down Rotation",
-                    "type": "Button",
-                    "id": "6719ab1f-6efd-4e9b-937e-bc3de86ac55a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Left/Right Rotation",
-                    "type": "Button",
-                    "id": "d452d728-7d7d-46b3-a40b-9777573561db",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Shoot",
                     "type": "Button",
                     "id": "dde54a01-9f08-4adb-9631-83afcb22c0c5",
@@ -44,72 +26,6 @@
             ],
             "bindings": [
                 {
-                    "name": "1D Axis",
-                    "id": "6ec4095b-250c-47c7-960a-96c9b956f91a",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Up/Down Rotation",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "18090994-960e-4770-a886-767f228992bc",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Up/Down Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "9e151588-c0e0-4cfe-acf9-e142e02be475",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Up/Down Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "2980e291-7779-4635-a756-6453daf91788",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Left/Right Rotation",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "22ca7d19-71ff-428e-86ea-27c70099401e",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Left/Right Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "ba871596-e01b-4d3f-aec9-07aaadece3e6",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Left/Right Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "08482425-fddc-4f25-ae1d-a4ee887ca7c9",
                     "path": "<Keyboard>/space",
@@ -121,7 +37,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "WASD",
                     "id": "d7bdf84f-95c5-4fd6-999b-a2bd4686b0f1",
                     "path": "2DVector",
                     "interactions": "",
@@ -134,7 +50,7 @@
                 {
                     "name": "up",
                     "id": "0b8f426a-7532-4612-bf31-b866da53ae56",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -145,7 +61,7 @@
                 {
                     "name": "down",
                     "id": "fa52751d-1960-4105-99b3-7151ced69a3e",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -156,7 +72,7 @@
                 {
                     "name": "left",
                     "id": "0f3929b9-7140-4c38-896f-d698c43abe40",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -167,13 +83,24 @@
                 {
                     "name": "right",
                     "id": "189282b7-9f66-49f0-84ad-8dd3b3fe5a5f",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "7ac05bac-c95b-4217-b148-c09d8919b3dd",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

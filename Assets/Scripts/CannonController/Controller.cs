@@ -32,7 +32,7 @@ public class Controller : MonoBehaviour
     }
 
     private void Update()
-    {
+    {;
         cannon.GetComponent<IWeapon>().Rotate(rotation);
         cannon.GetComponent<IWeapon>().Shoot(_isShooting);
     }
