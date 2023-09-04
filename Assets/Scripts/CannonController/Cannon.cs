@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour, IWeapon
 {
+    public static Cannon instance;
+
     [Header("Rotations")]
 
     [SerializeField] private GameObject turret;
@@ -16,19 +18,40 @@ public class Cannon : MonoBehaviour, IWeapon
 
     [SerializeField] private Transform leftMuzzle;
     [SerializeField] private Transform rightMuzzle;
-    [SerializeField] private GameObject cannonBall;
-    [SerializeField] private float cannonBallMass = 30;
+    [SerializeField] private Animator leftShutter;
+    [SerializeField] private Animator rightShutter;
+    [SerializeField] private GameObject ammoPrefab;
+    [SerializeField] private float ammoMass = 30;
     [SerializeField] private float force = 1000f;
     [SerializeField] private float offSet = 0.5f;
+    [SerializeField] private float timeBeforeAmmoDestruction = 3f;
     [SerializeField] private LineRenderer leftLineRenderer;
     [SerializeField] private LineRenderer rightLineRenderer;
     [SerializeField] private TrajectoryLine trajectoryLine;
     [SerializeField] private GameObject smokeEffect;
+    private bool _isLeftShooting = true;
 
-    private float lastShoot;
+    private float _lastShoot;
+    public float AmmoMass
+    {
+        get
+        {
+            return ammoMass;
+        }
+    }
+
+    public float Force
+    {
+        get
+        {
+            return force;
+        }
+    }
 
     private void Awake()
     {
+        if (instance == null) instance = this;
+
         leftLineRenderer.gameObject.SetActive(true);
         rightLineRenderer.gameObject.SetActive(true);
     }
@@ -50,49 +73,56 @@ public class Cannon : MonoBehaviour, IWeapon
 
     public void Shoot(bool isShooting)
     {
-        trajectoryLine.ShowTrajectoryLine(leftMuzzle.position, leftMuzzle.up * force / cannonBallMass, leftLineRenderer);
-        trajectoryLine.ShowTrajectoryLine(rightMuzzle.position, rightMuzzle.up * force / cannonBallMass, rightLineRenderer);
+        trajectoryLine.ShowTrajectoryLine(leftMuzzle.position, leftMuzzle.forward * force / ammoMass, leftLineRenderer);
+        trajectoryLine.ShowTrajectoryLine(rightMuzzle.position, rightMuzzle.forward * force / ammoMass, rightLineRenderer);
 
-        if (isShooting && Time.time >= lastShoot + offSet)
+        if (isShooting && Time.time >= _lastShoot + offSet)
         {
-            lastShoot = Time.time;
-            GameObject smoke1 = Instantiate(smokeEffect, leftMuzzle.transform.position, smokeEffect.gameObject.transform.rotation);
-            GameObject smoke2 = Instantiate(smokeEffect, leftMuzzle.transform.position, smokeEffect.gameObject.transform.rotation);
-            StartCoroutine(DestroySmoke(smoke1));
-            StartCoroutine(DestroySmoke(smoke2));
-            GameObject ball1 = CannonBallPool.instance.GetPooledObject();
-            
-            if (ball1 != null)
-            {
-                ball1.transform.position = leftMuzzle.position;
-                ball1.transform.rotation = leftMuzzle.rotation;
-                ball1.gameObject.SetActive(true);
-                ball1.GetComponent<MeshRenderer>().enabled = true;
-            }
-            GameObject ball2 = CannonBallPool.instance.GetPooledObject();
+            _lastShoot = Time.time;
 
-            if (ball2 != null)
+            if (_isLeftShooting)
             {
-                ball2.transform.position = rightMuzzle.position;
-                ball2.transform.rotation = rightMuzzle.rotation;
-                ball2.gameObject.SetActive(true);
-                ball2.GetComponent<MeshRenderer>().enabled = true;
+                BarrelShoot(leftMuzzle);
+                _isLeftShooting = false;
             }
-            var rb1 = ball1.GetComponent<Rigidbody>();
-            var rb2 = ball2.GetComponent<Rigidbody>();
-            rb1.mass = cannonBallMass;
-            rb2.mass = cannonBallMass;
-            rb1.AddForce(leftMuzzle.up * force, ForceMode.Impulse);
-            rb2.AddForce(rightMuzzle.up * force, ForceMode.Impulse);
-            StartCoroutine(ball1.GetComponent<CannonBallExplosion>().DestroyBall(3f));
-            StartCoroutine(ball2.GetComponent<CannonBallExplosion>().DestroyBall(3f));
+            else
+            {
+                BarrelShoot(rightMuzzle);
+                _isLeftShooting = true;
+            }
         }
+    }
+
+    private void BarrelShoot(Transform muzzle)
+    {
+        if (muzzle.childCount == 0)
+        {
+            GameObject smoke = Instantiate(smokeEffect, muzzle.transform.position, smokeEffect.gameObject.transform.rotation);
+            smoke.transform.parent = muzzle;
+            smoke.transform.localScale = muzzle.localScale;
+            StartCoroutine(DestroySmoke(smoke));
+        }
+
+        if (_isLeftShooting) leftShutter.SetTrigger("ShutterMove");
+        else rightShutter.SetTrigger("ShutterMove");
+
+        GameObject spawnedObject = AmmoObjectsPool.instance.GetPooledObject();
+
+        if (spawnedObject != null)
+        {
+            spawnedObject.transform.position = muzzle.position;
+            spawnedObject.gameObject.SetActive(true);
+        }
+        var rb = spawnedObject.GetComponent<Rigidbody>();
+        rb.mass = AmmoMass;
+        rb.AddForce(muzzle.forward * Force, ForceMode.Impulse);
+        StartCoroutine(spawnedObject.GetComponent<AmmoExplosion>().DestroyAmmo(timeBeforeAmmoDestruction));
     }
 
     private IEnumerator DestroySmoke(GameObject smoke)
     {
         ParticleSystem parts = smoke.GetComponent<ParticleSystem>();
-        float totalDuration = parts.duration + parts.startLifetime;
+        float totalDuration = parts.main.duration + parts.main.startLifetime.constant;
 
         yield return new WaitForSeconds(totalDuration);
         Destroy(smoke);
