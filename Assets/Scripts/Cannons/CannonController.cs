@@ -28,7 +28,7 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
             ""id"": ""1c5d45e9-579d-484c-a23d-745717938b49"",
             ""actions"": [
                 {
-                    ""name"": ""Shoot"",
+                    ""name"": ""SetTrigger"",
                     ""type"": ""Button"",
                     ""id"": ""dde54a01-9f08-4adb-9631-83afcb22c0c5"",
                     ""expectedControlType"": ""Button"",
@@ -54,7 +54,7 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Shoot"",
+                    ""action"": ""SetTrigger"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -131,7 +131,7 @@ public partial class @CannonController : IInputActionCollection2, IDisposable
 }");
         // Movement
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
-        m_Movement_Shoot = m_Movement.FindAction("Shoot", throwIfNotFound: true);
+        m_Movement_Shoot = m_Movement.FindAction("SetTrigger", throwIfNotFound: true);
         m_Movement_Rotation = m_Movement.FindAction("Rotation", throwIfNotFound: true);
     }
 

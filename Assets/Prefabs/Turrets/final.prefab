@@ -490,8 +490,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7196504986948052398}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -663,11 +663,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turret: {fileID: 7156752172022074515}
-  _xMaxRotation: 10
-  _yMaxRotation: 50
-  _xMinRotation: -50
-  _yMinRotation: -50
+  xMaxRotation: 10
+  yMaxRotation: 50
+  xMinRotation: -50
+  yMinRotation: -50
   rotationSpeed: 35
+  leftBarrel:
+    muzzle: {fileID: 5092041290240031450}
+    smokeEffect: {fileID: 604881602135655207, guid: 6ea1fe18c5604da4e84ae4f586094f27,
+      type: 3}
+    shutterAnimator: {fileID: 7547697834834444865}
+    ammoMass: 30
+    force: 1000
+  rightBarrel:
+    muzzle: {fileID: 5666685590621605703}
+    smokeEffect: {fileID: 604881602135655207, guid: 6ea1fe18c5604da4e84ae4f586094f27,
+      type: 3}
+    shutterAnimator: {fileID: 8854364766858504185}
+    ammoMass: 30
+    force: 1000
   leftMuzzle: {fileID: 5092041290240031450}
   rightMuzzle: {fileID: 5666685590621605703}
   leftShutter: {fileID: 7547697834834444865}
@@ -915,7 +929,7 @@ PrefabInstance:
     - target: {fileID: 6613223031234391832, guid: 4e88006d14e4cdc4e93da74dab4262f6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02218
+      value: 0.022180008
       objectReference: {fileID: 0}
     - target: {fileID: 6613223031234391832, guid: 4e88006d14e4cdc4e93da74dab4262f6,
         type: 3}
@@ -925,7 +939,7 @@ PrefabInstance:
     - target: {fileID: 6613223031234391832, guid: 4e88006d14e4cdc4e93da74dab4262f6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.02737
+      value: -0.027369998
       objectReference: {fileID: 0}
     - target: {fileID: 6613223031234391832, guid: 4e88006d14e4cdc4e93da74dab4262f6,
         type: 3}
@@ -935,17 +949,17 @@ PrefabInstance:
     - target: {fileID: 6613223031234391832, guid: 4e88006d14e4cdc4e93da74dab4262f6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6613223031234391832, guid: 4e88006d14e4cdc4e93da74dab4262f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6613223031234391832, guid: 4e88006d14e4cdc4e93da74dab4262f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6613223031234391832, guid: 4e88006d14e4cdc4e93da74dab4262f6,
         type: 3}
