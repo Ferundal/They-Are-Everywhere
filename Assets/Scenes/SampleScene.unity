@@ -581,7 +581,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 708100013}
-  - component: {fileID: 708100012}
+  - component: {fileID: 708100014}
   m_Layer: 0
   m_Name: ObjectPooling
   m_TagString: Untagged
@@ -589,21 +589,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &708100012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708100011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc86e473bedc3b84d96e6b53c8f5e734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoAmount: 20
-  ammoPrefub: {fileID: 1618917484923186010, guid: 5d2d4a3a405d09148827a20117556fa1,
-    type: 3}
 --- !u!4 &708100013
 Transform:
   m_ObjectHideFlags: 0
@@ -619,6 +604,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &708100014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708100011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a87c359c61cd89c46be66e05439c9fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammunitionPrefub: {fileID: -8436555220330311185, guid: 5d2d4a3a405d09148827a20117556fa1,
+    type: 3}
+  ammunitionAmount: 20
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1089,6 +1089,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: final
       objectReference: {fileID: 0}
+    - target: {fileID: 5072411702473172812, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
+        type: 3}
+      propertyPath: ammunitionPool
+      value: 
+      objectReference: {fileID: 708100014}
+    - target: {fileID: 6069472920586781428, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
+        type: 3}
+      propertyPath: ammunitionPool
+      value: 
+      objectReference: {fileID: 708100014}
+    - target: {fileID: 7023535359015850517, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
+        type: 3}
+      propertyPath: ammunitionPool
+      value: 
+      objectReference: {fileID: 708100014}
     - target: {fileID: 7023535359015850517, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
         type: 3}
       propertyPath: leftLineRenderer
