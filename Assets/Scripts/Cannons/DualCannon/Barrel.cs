@@ -12,7 +12,8 @@ namespace Assets.Scripts.Cannons.DualCannon
 
         [SerializeField] private GameObject smokeEffect;
         [SerializeField] private Animator shutterAnimator;
-        
+        [SerializeField] private Animator barrelAnimator;
+
         private Ammunition ammunition;
 
         public void Shoot()
@@ -30,6 +31,7 @@ namespace Assets.Scripts.Cannons.DualCannon
             ammunition.transform.position = muzzle.position;
             ammunition.gameObject.SetActive(true);
             shutterAnimator.SetTrigger("ShutterMove");
+            barrelAnimator.SetTrigger("BarrelMove");
             ammunition.gameObject.transform.rotation = muzzle.rotation;
             ammunition.Fire();
         }
