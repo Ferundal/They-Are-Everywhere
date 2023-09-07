@@ -315,32 +315,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &357415035 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5803156219532872346, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-    type: 3}
-  m_PrefabInstance: {fileID: 8985154115492175113}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &357415037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357415035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8de2769fe8f02264b8e6cbcc8a8c9fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnPosition: {fileID: 437132915}
-  ammunitionPool: {fileID: 708100014}
---- !u!95 &357415038 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8796365293071764993, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-    type: 3}
-  m_PrefabInstance: {fileID: 8985154115492175113}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,12 +430,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!4 &437132915 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 692089250, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-    type: 3}
-  m_PrefabInstance: {fileID: 8985154115492175113}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &659751650
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,12 +619,6 @@ MonoBehaviour:
   ammunitionPrefub: {fileID: -8436555220330311185, guid: 5d2d4a3a405d09148827a20117556fa1,
     type: 3}
   ammunitionAmount: 20
---- !u!4 &808728573 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 97854938, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-    type: 3}
-  m_PrefabInstance: {fileID: 8985154115492175113}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,32 +1016,6 @@ LineRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 305361967}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2047780936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5459722171774691150, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-    type: 3}
-  m_PrefabInstance: {fileID: 8985154115492175113}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2047780938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2047780936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8de2769fe8f02264b8e6cbcc8a8c9fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnPosition: {fileID: 808728573}
-  ammunitionPool: {fileID: 708100014}
---- !u!95 &2047780939 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7016274069875155925, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-    type: 3}
-  m_PrefabInstance: {fileID: 8985154115492175113}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6354934588318408834 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2630363069863378315, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
@@ -1093,6 +1029,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1795766572}
     m_Modifications:
+    - target: {fileID: 357415037, guid: 96d0751d43ac9914b9c7eb9d1acaa222, type: 3}
+      propertyPath: ammunitionPool
+      value: 
+      objectReference: {fileID: 708100014}
+    - target: {fileID: 2047780938, guid: 96d0751d43ac9914b9c7eb9d1acaa222, type: 3}
+      propertyPath: ammunitionPool
+      value: 
+      objectReference: {fileID: 708100014}
     - target: {fileID: 2630363069863378315, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
         type: 3}
       propertyPath: m_RootOrder
@@ -1153,16 +1097,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: final
       objectReference: {fileID: 0}
-    - target: {fileID: 5072411702473172812, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-        type: 3}
-      propertyPath: ammunitionPool
-      value: 
-      objectReference: {fileID: 708100014}
-    - target: {fileID: 6069472920586781428, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-        type: 3}
-      propertyPath: ammunitionPool
-      value: 
-      objectReference: {fileID: 708100014}
     - target: {fileID: 7023535359015850517, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
         type: 3}
       propertyPath: ammunitionPool
@@ -1178,15 +1112,5 @@ PrefabInstance:
       propertyPath: rightLineRenderer
       value: 
       objectReference: {fileID: 1822551872}
-    - target: {fileID: 7023535359015850517, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-        type: 3}
-      propertyPath: leftBarrel.shutterAnimator
-      value: 
-      objectReference: {fileID: 2047780939}
-    - target: {fileID: 7023535359015850517, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
-        type: 3}
-      propertyPath: rightBarrel.shutterAnimator
-      value: 
-      objectReference: {fileID: 357415038}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96d0751d43ac9914b9c7eb9d1acaa222, type: 3}
