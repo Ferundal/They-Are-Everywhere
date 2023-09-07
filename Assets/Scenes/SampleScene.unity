@@ -583,7 +583,7 @@ GameObject:
   - component: {fileID: 708100013}
   - component: {fileID: 708100014}
   m_Layer: 0
-  m_Name: ObjectPooling
+  m_Name: AmmoPooling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a87c359c61cd89c46be66e05439c9fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammunitionPrefub: {fileID: -8436555220330311185, guid: 5d2d4a3a405d09148827a20117556fa1,
+  ammunitionPrefub: {fileID: 2373631527697053341, guid: 59738910b15129c459f56166186cc86c,
     type: 3}
   ammunitionAmount: 20
 --- !u!1 &832575517
@@ -860,6 +860,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231852192}
   m_CullTransparentMesh: 1
+--- !u!1 &1232667123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1232667125}
+  - component: {fileID: 1232667124}
+  m_Layer: 0
+  m_Name: ShellPooling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1232667124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232667123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a87c359c61cd89c46be66e05439c9fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammunitionPrefub: {fileID: 7672904427739073917, guid: 43fbeb9d596308e4b8b69c350341eeb7,
+    type: 3}
+  ammunitionAmount: 20
+--- !u!4 &1232667125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232667123}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.813667, y: 16.869778, z: 17.128231}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1255782806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3907871812116557302, guid: 9629406046e6b5948ac4d3af66cd6649,
@@ -1032,11 +1079,11 @@ PrefabInstance:
     - target: {fileID: 357415037, guid: 96d0751d43ac9914b9c7eb9d1acaa222, type: 3}
       propertyPath: ammunitionPool
       value: 
-      objectReference: {fileID: 708100014}
+      objectReference: {fileID: 1232667124}
     - target: {fileID: 2047780938, guid: 96d0751d43ac9914b9c7eb9d1acaa222, type: 3}
       propertyPath: ammunitionPool
       value: 
-      objectReference: {fileID: 708100014}
+      objectReference: {fileID: 1232667124}
     - target: {fileID: 2630363069863378315, guid: 96d0751d43ac9914b9c7eb9d1acaa222,
         type: 3}
       propertyPath: m_RootOrder
