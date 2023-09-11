@@ -34,13 +34,19 @@ public class Controller : MonoBehaviour
 
     private void Rotate(InputAction.CallbackContext context)
     {
-        rotation = context.ReadValue<Vector2>();
+        if (PauseGame.instance.isPaused == false)
+        {
+            rotation = context.ReadValue<Vector2>();
+        }
     }
 
     private void Shoot(InputAction.CallbackContext context)
     {
-        isTriggerOn = context.ReadValueAsButton();
-        cannon.SetTrigger(isTriggerOn);
+        if (PauseGame.instance.isPaused == false)
+        {
+            isTriggerOn = context.ReadValueAsButton();
+            cannon.SetTrigger(isTriggerOn);
+        }
     }
 
     private void Update()
