@@ -4,19 +4,25 @@ using UnityEngine.InputSystem;
 public class Controller : MonoBehaviour
 {
     private CannonController _cannonController;
-    private Vector2 rotation;
-    private bool isTriggerOn;
+    private Vector2 _rotation;
+    private bool _isTriggerOn;
 
     [SerializeField] private Cannon cannon;
 
     private void Awake()
     {
         _cannonController = new CannonController();
+        StateManager.Instance.OnStateChanged += OnStateChanged;
     }
 
     private void OnEnable()
     {
         _cannonController.Enable();
+    }
+
+    private void OnDestroy()
+    {
+        StateManager.Instance.OnStateChanged -= OnStateChanged;
     }
 
     private void OnDisable()
@@ -34,23 +40,24 @@ public class Controller : MonoBehaviour
 
     private void Rotate(InputAction.CallbackContext context)
     {
-        if (PauseGame.instance.isPaused == false)
-        {
-            rotation = context.ReadValue<Vector2>();
-        }
+
+        _rotation = context.ReadValue<Vector2>();
+
     }
 
     private void Shoot(InputAction.CallbackContext context)
     {
-        if (PauseGame.instance.isPaused == false)
-        {
-            isTriggerOn = context.ReadValueAsButton();
-            cannon.SetTrigger(isTriggerOn);
-        }
+        _isTriggerOn = context.ReadValueAsButton();
+        cannon.SetTrigger(_isTriggerOn);
     }
 
     private void Update()
     {
-        if (rotation != Vector2.zero) cannon.Rotate(rotation);
+        if (_rotation != Vector2.zero) cannon.Rotate(_rotation);
+    }
+
+    private void OnStateChanged(GameState newGameState)
+    {
+        enabled = newGameState == GameState.Gameplay;
     }
 }

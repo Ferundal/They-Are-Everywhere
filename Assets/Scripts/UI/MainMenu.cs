@@ -2,25 +2,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class PauseMenuController : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Sprite _mutedSprite;
     [SerializeField] private Sprite _unmutedSprite;
     [SerializeField] private VisualTreeAsset _settingsButtonTemplate;
     [SerializeField] private VisualElement _settingsButtons;
     private UIDocument _uiDocument;
-    private Button _resumeButton;
+    private Button _playButton;
     private Button _settingsButton;
     private Button _exitButton;
     private Button _muteButton;
     private VisualElement _buttonWraper;
     private bool _muted;
 
-    private void OnEnable()
+    private void Awake()
     {
         _uiDocument = GetComponent<UIDocument>();
-        _resumeButton = _uiDocument.rootVisualElement.Q<Button>("ResumeButton");
-        _resumeButton.clicked += ResumeGame;
+        _playButton = _uiDocument.rootVisualElement.Q<Button>("PlayButton");
+        _playButton.clicked += LoadScene;
         _settingsButton = _uiDocument.rootVisualElement.Q<Button>("SettingsButton");
         _settingsButton.clicked += ShowSettings;
         _exitButton = _uiDocument.rootVisualElement.Q<Button>("ExitButton");
@@ -32,9 +32,10 @@ public class PauseMenuController : MonoBehaviour
         var backButton = _settingsButtons.Q<Button>("BackButton");
         backButton.clicked += BackButtonTriggered;
     }
-    private void ResumeGame()
+
+    private void LoadScene()
     {
-        PauseGame.instance.TogglePause();
+        SceneManager.LoadScene("SampleScene");
     }
 
     private void Exit()
@@ -60,7 +61,7 @@ public class PauseMenuController : MonoBehaviour
     private void BackButtonTriggered()
     {
         _buttonWraper.Clear();
-        _buttonWraper.Add(_resumeButton);
+        _buttonWraper.Add(_playButton);
         _buttonWraper.Add(_settingsButton);
         _buttonWraper.Add(_exitButton);
     }

@@ -76,7 +76,7 @@ public class Cannon : MonoBehaviour, IWeapon
             leftBarrel.Shoot();
             rightBarrel.Shoot();
             yield return new WaitForSeconds(offSet);
-        } 
+        }
         while (_isTriggerOn);
         _fireCycle = null;
     }

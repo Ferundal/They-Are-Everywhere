@@ -20,7 +20,7 @@ namespace Assets.Scripts.Cannons.DualCannon
         {
             /*            if (muzzle.childCount == 0)
                         {
-                            GameObject smoke = Instantiate(smokeEffect, muzzle.transform.position, smokeEffect.gameObject.transform.rotation);
+                            GameObject smoke = Instantiate(smokeEffect, muzzle.transform.position, smokeEffect.gameObject.transform._rotation);
                             smoke.transform.parent = muzzle;
                             smoke.transform.localScale = muzzle.localScale;
                             StartCoroutine(DestroySmoke(smoke));
