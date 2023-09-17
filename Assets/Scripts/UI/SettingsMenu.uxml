@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Scripts/UI/MenuStyles.uss?fileID=7433441132597879392&amp;guid=771c66da3a223d24e8a870b0451ef24e&amp;type=3#MenuStyles" />
-    <ui:VisualElement name="SettingsMenu">
-        <ui:Button text="SettingA" display-tooltip-when-elided="true" name="SettingA" class="menu-button" />
-        <ui:Button text="SettingB" display-tooltip-when-elided="true" name="SettingB" class="menu-button" />
-        <ui:Button text="SettingC" display-tooltip-when-elided="true" name="SettingC" class="menu-button" />
-        <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" class="menu-button" />
-    </ui:VisualElement>
-</ui:UXML>

@@ -12,7 +12,7 @@ public class Controller : MonoBehaviour
     private void Awake()
     {
         _cannonController = new CannonController();
-        StateManager.Instance.OnStateChanged += OnStateChanged;
+        PauseManager._instance.OnStateChanged += OnStateChanged;
     }
 
     private void OnEnable()
@@ -22,7 +22,7 @@ public class Controller : MonoBehaviour
 
     private void OnDestroy()
     {
-        StateManager.Instance.OnStateChanged -= OnStateChanged;
+        PauseManager._instance.OnStateChanged -= OnStateChanged;
     }
 
     private void OnDisable()
@@ -56,8 +56,8 @@ public class Controller : MonoBehaviour
         if (_rotation != Vector2.zero) cannon.Rotate(_rotation);
     }
 
-    private void OnStateChanged(GameState newGameState)
+    private void OnStateChanged(bool isPaused)
     {
-        enabled = newGameState == GameState.Gameplay;
+        enabled = !isPaused;
     }
 }

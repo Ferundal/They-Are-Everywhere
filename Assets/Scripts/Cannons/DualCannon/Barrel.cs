@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Assets.Scripts.Cannons.DualCannon
 {
@@ -36,13 +35,13 @@ namespace Assets.Scripts.Cannons.DualCannon
             ammunition.Fire();
         }
 
-/*        private IEnumerator DestroySmoke(GameObject smoke)
-        {
-            ParticleSystem parts = smoke.GetComponent<ParticleSystem>();
-            float totalDuration = parts.main.duration + parts.main.startLifetime.constant;
+        /*        private IEnumerator DestroySmoke(GameObject smoke)
+                {
+                    ParticleSystem parts = smoke.GetComponent<ParticleSystem>();
+                    float totalDuration = parts.main.duration + parts.main.startLifetime.constant;
 
-            yield return new WaitForSeconds(totalDuration);
-            Destroy(smoke);
-        }*/
+                    yield return new WaitForSeconds(totalDuration);
+                    Destroy(smoke);
+                }*/
     }
 }
