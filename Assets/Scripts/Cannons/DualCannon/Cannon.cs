@@ -75,8 +75,10 @@ public class Cannon : MonoBehaviour, IWeapon
         {
             leftBarrel.Shoot();
             rightBarrel.Shoot();
+            StartCoroutine(CameraShake.instance.Shake(offSet));
+            AudioManager.instance.PlaySfx("GunSound");
             yield return new WaitForSeconds(offSet);
-        } 
+        }
         while (_isTriggerOn);
         _fireCycle = null;
     }
