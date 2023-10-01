@@ -8,7 +8,6 @@ public class EnemyPool : MonoBehaviour
 
     [SerializeField] private int enemyCount;
     private List<GameObject> enemyList = new List<GameObject>();
-    private int counter = 0;
 
     private void Awake()
     {
@@ -22,12 +21,12 @@ public class EnemyPool : MonoBehaviour
 
     public GameObject Get()
     {
-        if (counter >= enemyCount) counter = 0;
-
-        if (!enemyList[counter].gameObject.activeInHierarchy)
+        for (int i = 0; i < enemyList.Count; i++)
         {
-            counter++;
-            return enemyList[counter - 1];
+            if (!enemyList[i].activeInHierarchy)
+            {
+                return enemyList[i];
+            }
         }
 
         return null;

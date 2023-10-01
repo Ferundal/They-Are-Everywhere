@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour, IEnemy
 {
     [SerializeField] private float health;
     [SerializeField] private float speed;
+    [SerializeField] private GameObject bloodBurst;
     private float _health;
 
     private void OnEnable()
@@ -24,11 +25,12 @@ public class EnemyController : MonoBehaviour, IEnemy
         if ((_health - damage) <= 0) DestroyEnemy();
 
         else _health -= damage;
-        Debug.Log(_health);
     }
 
     private void DestroyEnemy()
     {
+        GameObject bloodBurstObject = Instantiate(bloodBurst, transform.position, transform.rotation) as GameObject;
+        Destroy(bloodBurstObject, 2f);
         gameObject.SetActive(false);
     }
 }

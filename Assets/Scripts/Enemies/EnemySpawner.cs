@@ -28,6 +28,7 @@ public class EnemySpawner : MonoBehaviour
                 enemy.transform.position = new Vector3(Random.Range(minX, maxX), 1, 0);
                 enemy.gameObject.SetActive(true);
             }
+
             yield return new WaitForSeconds(offset);
         }
         while (!_isFinished);
