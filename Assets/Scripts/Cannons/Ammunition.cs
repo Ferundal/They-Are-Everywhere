@@ -4,6 +4,7 @@ using UnityEngine.Pool;
 
 public class Ammunition : MonoBehaviour
 {
+    [SerializeField] private float projectileDamage;
     [SerializeField] private float force;
     [SerializeField] private float ammoMass;
     [SerializeField] private float tooFarAwayTime = 3f;
@@ -23,6 +24,9 @@ public class Ammunition : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Barrel"))
             return;
+
+        if (collision.gameObject.CompareTag("Enemy"))
+            collision.gameObject.GetComponent<EnemyController>().TakeDamage(projectileDamage);
 
         GameObject explosionObject = Instantiate(explosion, transform.position, transform.rotation) as GameObject;
         ParticleSystem parts = explosionObject.GetComponent<ParticleSystem>();
