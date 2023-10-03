@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5353301215716534568}
-  - component: {fileID: 6046950313664157054}
-  - component: {fileID: 968004224982884723}
   m_Layer: 0
   m_Name: him_obj
   m_TagString: Enemy
@@ -39,35 +37,6 @@ Transform:
   m_Father: {fileID: 7781671412382427742}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!65 &6046950313664157054
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343074029101744983}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.4958721, y: 1.9553142, z: 2.4399898}
-  m_Center: {x: 0.006927073, y: 0.47765708, z: -0.9520725}
---- !u!114 &968004224982884723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343074029101744983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4630bfc632eac40fda9fc97fb1b44881, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  speed: 20
-  bloodBurst: {fileID: 8512406119405314462, guid: 0a997f9d6beb5784680aa450b41f0ea7,
-    type: 3}
 --- !u!1 &1170954611480369422
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,9 +464,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7781671412382427742}
+  - component: {fileID: 8657951847855098123}
+  - component: {fileID: 6161974422242735300}
   m_Layer: 0
   m_Name: bigbug
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -518,6 +489,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8657951847855098123
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6968718196990652644}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4958721, y: 1.9553142, z: 2.4621465}
+  m_Center: {x: 0.006927073, y: 0.47765708, z: 0.9224173}
+--- !u!114 &6161974422242735300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6968718196990652644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4630bfc632eac40fda9fc97fb1b44881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  speed: 1
+  bloodBurst: {fileID: 8512406119405314462, guid: 0a997f9d6beb5784680aa450b41f0ea7,
+    type: 3}
 --- !u!1 &8907915333082947494
 GameObject:
   m_ObjectHideFlags: 0

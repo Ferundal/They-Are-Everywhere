@@ -28,7 +28,6 @@ public class EnemyPool : MonoBehaviour
                 return enemyList[i];
             }
         }
-
         return null;
     }
 }

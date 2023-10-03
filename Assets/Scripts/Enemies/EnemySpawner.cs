@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
+        PauseManager._instance.OnStateChanged += OnStateChanged;
         spawnCycle = StartCoroutine(Spawn(offSet));
     }
 
@@ -21,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
     {
         do
         {
+            yield return new WaitForSeconds(offset);
             var enemy = enemyPool.Get();
 
             if (enemy != null)
@@ -28,10 +30,16 @@ public class EnemySpawner : MonoBehaviour
                 enemy.transform.position = new Vector3(Random.Range(minX, maxX), 1, 0);
                 enemy.gameObject.SetActive(true);
             }
-
-            yield return new WaitForSeconds(offset);
         }
         while (!_isFinished);
         spawnCycle = null;
+    }
+
+    private void OnStateChanged(bool isPaused)
+    {
+        if (!isPaused)
+            spawnCycle = StartCoroutine(Spawn(offSet));
+        else
+            StopCoroutine(spawnCycle);
     }
 }
