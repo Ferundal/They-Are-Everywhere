@@ -1,0 +1,9 @@
+#navigation-button {
+    width: 42px;
+    height: 42px;
+}
+
+.navigation-button {
+    width: 42px;
+    height: 42px;
+}
