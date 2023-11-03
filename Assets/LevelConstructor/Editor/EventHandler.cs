@@ -7,6 +7,7 @@ namespace LevelConstructor
     {
         public Action<Event> OnMouseUp;
         public Action<Event> OnMouseDown;
+        public Action<Event> OnMouseMove;
 
         public void ProcessEvent(Event currentEvent)
         {
@@ -17,6 +18,9 @@ namespace LevelConstructor
                     break;
                 case EventType.MouseDown:
                     OnMouseDown?.Invoke(currentEvent);
+                    break;
+                case EventType.MouseMove:
+                    OnMouseMove?.Invoke(currentEvent);
                     break;
             }
         }

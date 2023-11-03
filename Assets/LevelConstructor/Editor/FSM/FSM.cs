@@ -1,4 +1,3 @@
-using LevelConstructor.Editor.FSM.States;
 using UnityEngine.UIElements;
 
 namespace LevelConstructor
@@ -25,6 +24,7 @@ namespace LevelConstructor
             {
                 CurrentState = newState;
                 Root.Add(newState.Panel.Body);
+                CurrentState.OnEnter();
             }
         }
 
@@ -35,6 +35,11 @@ namespace LevelConstructor
             Root.RemoveAt(1);
             Root.Add(CurrentState.Panel.Body);
             CurrentState.OnEnter();
+        }
+
+        public void OnSceneGUI()
+        {
+            CurrentState.OnSceneGUI();
         }
 
         private void CreateNavigationPanel()

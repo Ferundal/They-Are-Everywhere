@@ -1,6 +1,4 @@
-using UnityEngine.UIElements;
-
-namespace LevelConstructor.Editor.FSM.States
+namespace LevelConstructor
 {
     public abstract class State
     {
@@ -17,6 +15,11 @@ namespace LevelConstructor.Editor.FSM.States
         }
         
         public virtual void OnExit()
+        {
+            
+        }
+        
+        public virtual void OnSceneGUI()
         {
             
         }

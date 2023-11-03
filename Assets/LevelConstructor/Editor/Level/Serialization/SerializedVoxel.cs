@@ -1,16 +1,18 @@
 using System;
 using UnityEngine;
 
-namespace LevelConstructor.Editor.Level.Serialization
+namespace LevelConstructor
 {
     [Serializable]
     public class SerializedVoxel
     {
-        public Vector3Int Position;
+        public string voxelType;
+        public Vector3Int position;
 
-        public SerializedVoxel(Vector3Int position)
+        public SerializedVoxel(Voxel voxel)
         {
-            Position = new Vector3Int(position.x, position.y, position.z);
+            voxelType = voxel.voxelType;
+            position = new Vector3Int(voxel.position.x, voxel.position.y, voxel.position.z);
         }
     }
 }
