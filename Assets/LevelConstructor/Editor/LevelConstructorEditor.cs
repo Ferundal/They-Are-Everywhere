@@ -78,6 +78,10 @@ namespace LevelConstructor
             
             var paintState = new Paint(visualPanel, _eventHandler, _levelConstructor);
             _fsm.Add(paintState);
+            visualPanel = new VisualPanel($"{PathUtility.PanelsPath}/BakePanel.uxml",
+                $"{PathUtility.PanelsPath}/Panel.uss");
+            var bakeState = new Bake(visualPanel);
+            _fsm.Add(bakeState);
         }
 
         void OnDuringSceneGui(SceneView sceneView)

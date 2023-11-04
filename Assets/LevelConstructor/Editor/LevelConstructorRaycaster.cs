@@ -41,7 +41,6 @@ namespace LevelConstructor
                     (int)(Math.Ceiling(_groundTouchPosition.x / brushSize.x)), 
                     -1,
                     (int)(Math.Ceiling(_groundTouchPosition.z / brushSize.z)));
-                Debug.Log(voxelPosition + " " + _groundTouchPosition);
                 voxelDirection = VoxelDirection.Up;
                 return true;
             }

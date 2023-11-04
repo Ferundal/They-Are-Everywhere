@@ -1036,6 +1036,7 @@ MonoBehaviour:
   serializedLevel: {fileID: 11400000, guid: b3c90e2480a2ff34e999bbd412445c72, type: 2}
   voxelPrefabs:
   - {fileID: 8941268150649759068, guid: 4deda9a35741abe4988bccff741286ba, type: 3}
+  - {fileID: 8941268150649759068, guid: 48a6fb4e417f162488505df24febbf9d, type: 3}
   voxels: []
 --- !u!4 &953487865
 Transform:

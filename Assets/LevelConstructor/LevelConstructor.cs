@@ -45,8 +45,11 @@ namespace LevelConstructor
         private void LoadVoxelPrefabs()
         {
             voxelPrefabs = new List<Voxel>();
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{PathUtility.VoxelPrefabsPath}/CubeTile.prefab");
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{PathUtility.VoxelPrefabsPath}/GrayBlock.prefab");
             voxelPrefabs.Add(prefab.GetComponent<Voxel>());
+            prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{PathUtility.VoxelPrefabsPath}/RedBlock.prefab");
+            voxelPrefabs.Add(prefab.GetComponent<Voxel>());
+            Debug.Log(voxelPrefabs.Count);
         }
 
         private void OptimizeVoxelsList()

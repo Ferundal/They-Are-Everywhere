@@ -20,6 +20,7 @@ namespace LevelConstructor
         public void Add(State newState)
         {
             _NavigationRoot.Add(newState.Panel.NavigationButton);
+            newState.Panel.NavigationButton.clicked += () => Transition(newState);
             if (CurrentState == null)
             {
                 CurrentState = newState;
@@ -45,6 +46,7 @@ namespace LevelConstructor
         private void CreateNavigationPanel()
         {
             _NavigationRoot = new VisualElement();
+            _NavigationRoot.style.flexDirection = FlexDirection.Row;
             Root.Add(_NavigationRoot);
         }
     }

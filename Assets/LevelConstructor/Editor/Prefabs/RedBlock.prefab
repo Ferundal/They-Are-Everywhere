@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6829320975086179787}
   - component: {fileID: 8941268150649759068}
   m_Layer: 0
-  m_Name: CubeTile
+  m_Name: RedBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3893a2490c879834a8d702a8557fa308, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,6 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelConstructor: {fileID: 0}
-  voxelType: standart_wall
+  voxelType: red_wall
   position: {x: 0, y: 0, z: 0}
   size: {x: 5, y: 5, z: 5}

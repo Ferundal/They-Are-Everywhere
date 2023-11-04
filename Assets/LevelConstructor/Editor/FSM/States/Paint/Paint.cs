@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace LevelConstructor
 {
@@ -8,13 +8,14 @@ namespace LevelConstructor
     {
         private EventHandler _eventHandler;
         private LevelConstructor _levelConstructor;
+        private Brush [] _brushes;
         private Brush _currentBrush;
         private Vector3Int _touchedVoxelPosition = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
         private Vector3Int _newTouchedVoxelPosition = new();
         private VoxelDirection _voxelDirection = new();
         private VoxelDirection _newVoxelDirection = new();
         private Vector3Int _brushPosition;
-        
+
         public Paint(VisualPanel panel, EventHandler eventHandler, LevelConstructor levelConstructor) : base(panel)
         {
             _eventHandler = eventHandler;
@@ -74,8 +75,25 @@ namespace LevelConstructor
         private void InitiateBrushes()
         {
             var voxelPrefabs = _levelConstructor.voxelPrefabs;
-            Brush[] brushes = voxelPrefabs.Select(item => new Brush(item)).ToArray();
-            _currentBrush = brushes[0];
+            _brushes = voxelPrefabs.Select(item => new Brush(item)).ToArray();
+            var panelSelector = Panel.Body.Q<DropdownField>("brush_selector");
+            panelSelector.choices.Clear();
+            foreach (var brush in _brushes)
+            {
+                panelSelector.choices.Add(brush.VoxelPrefab.voxelType);
+            }
+            _currentBrush = _brushes[0];
+            panelSelector.value = _currentBrush.VoxelPrefab.voxelType;
+            panelSelector.RegisterCallback<ChangeEvent<string>>((evt) =>
+            {
+                panelSelector.value = evt.newValue;
+                _currentBrush = _brushes[panelSelector.index];
+            });
+        }
+        
+        private void OnDropdownValueChanged(int index)
+        {
+            Debug.Log("Выбран элемент с индексом: " + index);
         }
     }
 }
