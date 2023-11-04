@@ -10,7 +10,8 @@ namespace LevelConstructor
         public bool IsActive;
         private MeshRenderer _meshRenderer;
         private Mesh _mesh;
-        private Matrix4x4 _localToWorldMatrix;
+        private Matrix4x4 _originalLocalToWorldMatrix;
+        private Matrix4x4 _currentLocalToWorldMatrix;
 
         private Vector3 _position;
 
@@ -19,9 +20,9 @@ namespace LevelConstructor
             get => _position;
             set
             {
+                Matrix4x4 newMatrix = Matrix4x4.TRS(value, Quaternion.identity, Vector3.one);
+                _currentLocalToWorldMatrix = newMatrix * _originalLocalToWorldMatrix;
                 _position = value;
-                Matrix4x4 newMatrix = Matrix4x4.TRS(_position, Quaternion.identity, Vector3.one);
-                _localToWorldMatrix = newMatrix * _localToWorldMatrix;
             }
         }
 
@@ -30,7 +31,7 @@ namespace LevelConstructor
             Position = Vector3.zero;
             
             var prefabLocalToWorldMatrix = placementMarkerPrefab.transform.localToWorldMatrix;
-            _localToWorldMatrix = new Matrix4x4(
+            _originalLocalToWorldMatrix = new Matrix4x4(
                 prefabLocalToWorldMatrix.GetRow(0),
                 prefabLocalToWorldMatrix.GetRow(1),
                 prefabLocalToWorldMatrix.GetRow(2),
@@ -42,10 +43,10 @@ namespace LevelConstructor
 
         public void Render()
         {
-            Debug.Log("Render");
             if (!IsActive) return;
             _meshRenderer.sharedMaterial.SetPass(0);
-            Graphics.DrawMeshNow(_mesh, _localToWorldMatrix, 0);
+            Graphics.DrawMeshNow(_mesh, _currentLocalToWorldMatrix, 0);
+            HandleUtility.Repaint();
         }
     }
 }

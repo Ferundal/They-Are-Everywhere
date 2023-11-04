@@ -1,4 +1,6 @@
+using System;
 using UnityEditor;
+using UnityEditor.TerrainTools;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,14 +20,18 @@ namespace LevelConstructor
         private VisualElement _editorRoot;
 
         private FSM _fsm;
-        
 
-        private void Awake()
+        private void OnEnable()
         {
             _levelConstructor = target as LevelConstructor;
             _fsm = new FSM();
             CreateStates();
             SceneView.duringSceneGui += OnDuringSceneGui;
+        }
+
+        private void OnDisable()
+        {
+            SceneView.duringSceneGui -= OnDuringSceneGui;
         }
 
         public override VisualElement CreateInspectorGUI()
@@ -58,7 +64,7 @@ namespace LevelConstructor
             _eventHandler.ProcessEvent(Event.current);
             _fsm.OnSceneGUI();
         }
-        
+
         private VisualElement CreateNoLevelObjectWarning()
         {
             return new Label("Add level scriptable object to work");

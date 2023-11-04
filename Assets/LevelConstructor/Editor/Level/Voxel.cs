@@ -10,6 +10,8 @@ namespace LevelConstructor
         public string voxelType;
         public Vector3Int position;
 
+        public Vector3 size;
+
         public VoxelDirection ClosestSideDirection(Vector3 point)
         {
             Vector3 cubeCenter = transform.position;

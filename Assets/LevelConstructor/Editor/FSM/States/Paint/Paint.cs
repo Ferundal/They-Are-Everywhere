@@ -12,6 +12,7 @@ namespace LevelConstructor
         private Vector3Int _touchedVoxelPosition = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
         private Vector3Int _newTouchedVoxelPosition = new();
         private VoxelDirection _voxelDirection = new();
+        private VoxelDirection _newVoxelDirection = new();
         private Vector3Int _brushPosition;
         
         public Paint(VisualPanel panel, EventHandler eventHandler, LevelConstructor levelConstructor) : base(panel)
@@ -37,6 +38,7 @@ namespace LevelConstructor
 
         private void UseBrush(Event currentEvent)
         {
+            if (_currentBrush == null) return;
             if (!_currentBrush.BrushPlacementMarker.IsActive) return;
             
             _levelConstructor.AddVoxel(_currentBrush.VoxelPrefab, _brushPosition);
@@ -47,19 +49,21 @@ namespace LevelConstructor
             if (!_levelConstructor.Raycaster.ScreenPositionToVoxelPosition(
                     currentEvent.mousePosition, 
                     ref _newTouchedVoxelPosition, 
-                    ref _voxelDirection))
+                    ref _newVoxelDirection,
+                    _currentBrush))
             {
                 _currentBrush.BrushPlacementMarker.IsActive = false;
                 return;
             }
-            if (_newTouchedVoxelPosition == _touchedVoxelPosition)
+            if (_newTouchedVoxelPosition == _touchedVoxelPosition && _newVoxelDirection == _voxelDirection)
             {
                 return;
             }
             _touchedVoxelPosition = _newTouchedVoxelPosition;
+            _voxelDirection = _newVoxelDirection;
             _currentBrush.BrushPlacementMarker.IsActive = true;
             _brushPosition = VoxelPositionUtility.NextInDirection(_touchedVoxelPosition, _voxelDirection);
-            _currentBrush.BrushPlacementMarker.Position = _levelConstructor.VoxelPositionToWorldPosition(_brushPosition);
+            _currentBrush.BrushPlacementMarker.Position = _levelConstructor.VoxelPositionToWorldPosition(_brushPosition, _currentBrush.VoxelPrefab);
         }
         
         public override void OnSceneGUI()

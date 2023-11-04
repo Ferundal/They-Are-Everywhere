@@ -1036,6 +1036,7 @@ MonoBehaviour:
   serializedLevel: {fileID: 11400000, guid: b3c90e2480a2ff34e999bbd412445c72, type: 2}
   voxelPrefabs:
   - {fileID: 8941268150649759068, guid: 4deda9a35741abe4988bccff741286ba, type: 3}
+  voxels: []
 --- !u!4 &953487865
 Transform:
   m_ObjectHideFlags: 0
@@ -1044,7 +1045,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953487863}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8547385, y: -0.49829248, z: -9.102757}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

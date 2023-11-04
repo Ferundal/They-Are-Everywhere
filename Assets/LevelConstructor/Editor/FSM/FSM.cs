@@ -41,7 +41,7 @@ namespace LevelConstructor
         {
             CurrentState.OnSceneGUI();
         }
-
+        
         private void CreateNavigationPanel()
         {
             _NavigationRoot = new VisualElement();

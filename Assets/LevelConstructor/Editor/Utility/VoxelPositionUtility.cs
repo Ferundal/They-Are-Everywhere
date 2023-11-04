@@ -28,6 +28,7 @@ namespace LevelConstructor
                     --next.z;
                     break;
             }
+
             return next;
         }
     }
