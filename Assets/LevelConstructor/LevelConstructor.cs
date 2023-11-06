@@ -1,23 +1,19 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Screen = UnityEngine.Device.Screen;
 
 namespace LevelConstructor
 {
     [ExecuteInEditMode]
-    public class LevelConstructor : MonoBehaviour, ISerializationCallbackReceiver
+    public class LevelConstructor : MonoBehaviour
     {
-        [SerializeField] private Level level;
+        [SerializeField] private SerializedLevel serializedLevel;
 
-        [SerializeField] public LevelModel LevelModel;
+        [SerializeField] public Level Level;
+        public LevelConstructorRaycaster Raycaster;
         [HideInInspector] public List<Voxel> voxelPrefabs;
-        [HideInInspector] public LevelConstructorRaycaster Raycaster { get; private set; }
         [HideInInspector][SerializeField] private List<Voxel> voxels;
-
-        public EventHandler Handler { get; } = new();
 
         private void OnEnable()
         {
@@ -53,21 +49,12 @@ namespace LevelConstructor
             voxelPrefabs.Add(prefab.GetComponent<Voxel>());
             prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{PathUtility.VoxelPrefabsPath}/RedBlock.prefab");
             voxelPrefabs.Add(prefab.GetComponent<Voxel>());
+            Debug.Log(voxelPrefabs.Count);
         }
 
         private void OptimizeVoxelsList()
         {
             voxels.RemoveAll(voxel => voxel == null);
-        }
-
-        public void OnBeforeSerialize()
-        {
-            //Debug.Log("OnBeforeSerialize");
-        }
-
-        public void OnAfterDeserialize()
-        {
-            Handler.HasUnprocessedDeserialization = true;
         }
     }
 }

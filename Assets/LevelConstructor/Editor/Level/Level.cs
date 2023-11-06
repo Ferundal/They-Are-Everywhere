@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LevelConstructor
 {
-    public class LevelModel
+    public class Level
     {
         private Voxel[,,] _voxels;
         
@@ -12,7 +12,7 @@ namespace LevelConstructor
         public delegate void OnChangedHandler();
         public event OnChangedHandler OnChanged;
         
-        public LevelModel(int size)
+        public Level(int size)
         {
             _voxels = new Voxel[size, size, size];
         }

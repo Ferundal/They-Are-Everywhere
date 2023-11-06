@@ -34,7 +34,7 @@ namespace LevelConstructor
             CurrentState?.OnExit();
             CurrentState = state;
             Root.RemoveAt(1);
-            Root.Add(CurrentState.Root);
+            Root.Add(CurrentState.Panel.Body);
             CurrentState.OnEnter();
         }
 

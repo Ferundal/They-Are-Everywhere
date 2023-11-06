@@ -16,8 +16,6 @@ namespace LevelConstructor
         private VoxelDirection _newVoxelDirection = new();
         private Vector3Int _brushPosition;
 
-        public override VisualElement Root => Panel.Body;
-
         public Paint(VisualPanel panel, EventHandler eventHandler, LevelConstructor levelConstructor) : base(panel)
         {
             _eventHandler = eventHandler;

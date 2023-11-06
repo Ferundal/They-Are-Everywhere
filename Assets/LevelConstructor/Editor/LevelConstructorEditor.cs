@@ -1,4 +1,6 @@
+using System;
 using UnityEditor;
+using UnityEditor.TerrainTools;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,23 +10,23 @@ namespace LevelConstructor
     [CustomEditor(typeof(LevelConstructor))]
     public class LevelConstructorEditor : UnityEditor.Editor
     {
-        public LevelConstructor _levelConstructor;
+        private readonly EventHandler _eventHandler = new();
+
+        private LevelConstructor _levelConstructor;
         
-        public SerializedProperty levelScriptableObject;
-        public PropertyField levelPropertyField;
+        private VisualElement _root;
+        private VisualElement _levelPropertyField;
+        private VisualElement _noLevelObjectWarning;
+        private VisualElement _editorRoot;
 
         private FSM _fsm;
-        private State _initialState;
-        
-        private EventHandler _eventHandler;
+
         private void OnEnable()
         {
             _levelConstructor = target as LevelConstructor;
-            _eventHandler = _levelConstructor.Handler;
             _fsm = new FSM();
+            CreateStates();
             SceneView.duringSceneGui += OnDuringSceneGui;
-            _eventHandler.OnGUIStart += SetInitialState;
-            _eventHandler.HasUnprocessedGUIStart = true;
         }
 
         private void OnDisable()
@@ -34,10 +36,26 @@ namespace LevelConstructor
 
         public override VisualElement CreateInspectorGUI()
         {
-            levelScriptableObject = serializedObject.FindProperty("level");
-            levelPropertyField = new PropertyField(levelScriptableObject);
-            CreateFSMStates();
-            return _fsm.Root;
+            _root = new VisualElement();
+
+            var levelScriptableObject = serializedObject.FindProperty("serializedLevel");
+            
+            _levelPropertyField = new PropertyField(levelScriptableObject);;
+            _root.Add(_levelPropertyField);
+
+            _noLevelObjectWarning = CreateNoLevelObjectWarning();
+            _editorRoot = _fsm.Root;
+
+            if (levelScriptableObject.objectReferenceValue != null)
+            {
+                _root.Add(_editorRoot);
+            }
+            else
+            {
+                _root.Add(_noLevelObjectWarning);
+            }
+            
+            return _root;
         }
 
         private void OnSceneGUI()
@@ -46,33 +64,26 @@ namespace LevelConstructor
             _eventHandler.ProcessEvent(Event.current);
             _fsm.OnSceneGUI();
         }
-        
-        
-        
-        private void CreateFSMStates()
+
+        private VisualElement CreateNoLevelObjectWarning()
+        {
+            return new Label("Add level scriptable object to work");
+        }
+
+        private void CreateStates()
         {
             var visualPanel = new VisualPanel(
                 $"{PathUtility.PanelsPath}/PaintPanel.uxml", 
                 $"{PathUtility.PanelsPath}/Panel.uss");
-            var paintState = new Paint(visualPanel, _eventHandler, _levelConstructor);
-            _initialState = paintState;
-            _fsm.Add(paintState);
-
-            visualPanel = new VisualPanel(
-                $"{PathUtility.PanelsPath}/BakePanel.uxml",
-                $"{PathUtility.PanelsPath}/Panel.uss");
-            var bakeState = new Bake(visualPanel, this);
-            _fsm.Add(bakeState);
             
-            _fsm.Transition(bakeState);
+            var paintState = new Paint(visualPanel, _eventHandler, _levelConstructor);
+            _fsm.Add(paintState);
+            visualPanel = new VisualPanel($"{PathUtility.PanelsPath}/BakePanel.uxml",
+                $"{PathUtility.PanelsPath}/Panel.uss");
+            var bakeState = new Bake(visualPanel);
+            _fsm.Add(bakeState);
         }
 
-        void SetInitialState()
-        {
-            _fsm.Transition(_initialState);
-            _eventHandler.OnGUIStart -= SetInitialState;
-        }
-        
         void OnDuringSceneGui(SceneView sceneView)
         {
             HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
