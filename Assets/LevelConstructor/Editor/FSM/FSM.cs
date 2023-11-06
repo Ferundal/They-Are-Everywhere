@@ -17,6 +17,11 @@ namespace LevelConstructor
             CreateNavigationPanel();
         }
 
+        public void OnDestroy()
+        {
+            CurrentState.OnExit();
+        }
+
         public void Add(State newState)
         {
             _NavigationRoot.Add(newState.Panel.NavigationButton);

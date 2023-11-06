@@ -11,6 +11,17 @@ namespace LevelConstructor
         private ProgressBar _progressBar;
 
         public override VisualElement Root { get; protected set; } = new();
+        
+        private string ProgressBarText {
+            get
+            {
+                return _progressBar.title;
+            }
+            set
+            {
+                _progressBar.title = value;
+            }
+        }
 
         public Bake(VisualPanel panel, LevelConstructorEditor levelConstructorEditor) : base(panel)
         {

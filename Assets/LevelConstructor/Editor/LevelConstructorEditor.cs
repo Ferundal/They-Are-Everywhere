@@ -24,11 +24,13 @@ namespace LevelConstructor
             _fsm = new FSM();
             SceneView.duringSceneGui += OnDuringSceneGui;
             _eventHandler.OnGUIStart += SetInitialState;
+            _eventHandler.HasUnprocessedGUIStart = true;
         }
 
         private void OnDisable()
         {
             SceneView.duringSceneGui -= OnDuringSceneGui;
+            _fsm.OnDestroy();
         }
 
         public override VisualElement CreateInspectorGUI()
@@ -36,7 +38,6 @@ namespace LevelConstructor
             levelScriptableObject = serializedObject.FindProperty("level");
             levelPropertyField = new PropertyField(levelScriptableObject);
             CreateFSMStates();
-            _eventHandler.HasUnprocessedGUIStart = true;
             return _fsm.Root;
         }
 
