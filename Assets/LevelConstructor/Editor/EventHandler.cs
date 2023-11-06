@@ -28,9 +28,9 @@ namespace LevelConstructor
                 case EventType.MouseMove:
                     OnMouseMove?.Invoke(currentEvent);
                     break;
-                //case EventType.Layout:
-                    //CheckAndInvokeSubEvents();
-                    //break;
+                case EventType.Layout:
+                    CheckAndInvokeSubEvents();
+                    break;
             }
         }
 

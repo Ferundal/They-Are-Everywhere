@@ -24,7 +24,6 @@ namespace LevelConstructor
             _fsm = new FSM();
             SceneView.duringSceneGui += OnDuringSceneGui;
             _eventHandler.OnGUIStart += SetInitialState;
-            _eventHandler.HasUnprocessedGUIStart = true;
         }
 
         private void OnDisable()
@@ -37,6 +36,7 @@ namespace LevelConstructor
             levelScriptableObject = serializedObject.FindProperty("level");
             levelPropertyField = new PropertyField(levelScriptableObject);
             CreateFSMStates();
+            _eventHandler.HasUnprocessedGUIStart = true;
             return _fsm.Root;
         }
 
@@ -69,8 +69,8 @@ namespace LevelConstructor
 
         void SetInitialState()
         {
-            _fsm.Transition(_initialState);
             _eventHandler.OnGUIStart -= SetInitialState;
+            _fsm.Transition(_initialState);
         }
         
         void OnDuringSceneGui(SceneView sceneView)
