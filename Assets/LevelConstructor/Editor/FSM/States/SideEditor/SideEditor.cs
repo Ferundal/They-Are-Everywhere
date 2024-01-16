@@ -1,9 +1,8 @@
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace LevelConstructor
 {
-    public class Bake : State
+    public class SideEditor : State
     {
         private LevelConstructorEditor _levelConstructorEditor;
         private Button _button;
@@ -11,7 +10,7 @@ namespace LevelConstructor
         private ProgressBar _progressBar;
 
         public override VisualElement Root { get; protected set; } = new();
-        
+
         private string ProgressBarText {
             get
             {
@@ -23,12 +22,12 @@ namespace LevelConstructor
             }
         }
 
-        public Bake(VisualPanel panel, LevelConstructorEditor levelConstructorEditor) : base(panel)
+        public SideEditor(VisualPanel panel, LevelConstructorEditor levelConstructorEditor) : base(panel)
         {
             _levelConstructorEditor = levelConstructorEditor;
 
-            _button = Panel.Body.Q<Button>("bake");
-            _button.clicked += () => StartBake();
+            _button = Panel.Body.Q<Button>("create_surfaces");
+            _button.clicked += () => CreateSides();
             
             _progressBar = Panel.Body.Q<ProgressBar>("progress_bar");
             
@@ -47,23 +46,22 @@ namespace LevelConstructor
             base.OnExit();
         }
 
-        private void StartBake()
+        private void CreateSides()
         {
             _isBaking = true;
             Root.RemoveAt(1);
             AssembleOptionalBakingStatusPanels();
         }
+        
+        
 
         private void AssembleBodyPanel()
         {
-            Root.Add(_levelConstructorEditor.levelPropertyField);
             AssembleOptionalPanels();
         }
 
         private void AssembleOptionalPanels()
         {
-            if (_levelConstructorEditor.levelScriptableObject.objectReferenceValue == null) return;
-            
             AssembleOptionalBakingStatusPanels();
         }
 

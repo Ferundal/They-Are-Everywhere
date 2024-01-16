@@ -9,6 +9,9 @@ namespace LevelConstructor
         public Action<Event> OnMouseDown;
         public Action<Event> OnMouseMove;
         
+        public bool HasUnprocessedSerialization = false;
+        public Action OnBeforeSerialize;
+        
         public bool HasUnprocessedDeserialization = false;
         public Action OnAfterDeserialize;
         
@@ -46,6 +49,12 @@ namespace LevelConstructor
             {
                 HasUnprocessedDeserialization = false;
                 OnAfterDeserialize?.Invoke();
+            }
+            
+            if (HasUnprocessedSerialization)
+            {
+                HasUnprocessedSerialization = false;
+                OnBeforeSerialize?.Invoke();
             }
         }
     }

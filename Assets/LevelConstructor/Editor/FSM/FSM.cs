@@ -1,19 +1,21 @@
+using System.Linq;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace LevelConstructor
 {
     public class FSM
     {
-        public State CurrentState { get; private set; }
-        public VisualElement Root { get; private set; }
+        public State CurrentState { get; private set; } = null;
+        public VisualElement Root { get; private set; } = new();
 
         public StyleSheet StyleSheet;
 
-        private VisualElement _NavigationRoot;
+        private readonly VisualElement _navigationRoot = new();
+        private State _pausedState = null;
 
         public FSM()
         {
-            Root = new VisualElement();
             CreateNavigationPanel();
         }
 
@@ -24,8 +26,9 @@ namespace LevelConstructor
 
         public void Add(State newState)
         {
-            _NavigationRoot.Add(newState.Panel.NavigationButton);
+            _navigationRoot.Add(newState.Panel.NavigationButton);
             newState.Panel.NavigationButton.clicked += () => Transition(newState);
+
             if (CurrentState == null)
             {
                 CurrentState = newState;
@@ -45,14 +48,32 @@ namespace LevelConstructor
 
         public void OnSceneGUI()
         {
-            CurrentState.OnSceneGUI();
+            CurrentState?.OnSceneGUI();
+        }
+
+        public void SetPause(bool isPauseOn)
+        {
+            if (isPauseOn && CurrentState != null)
+            {
+                _pausedState = CurrentState;
+                CurrentState.OnExit();
+                CurrentState = null;
+                return;
+            }
+
+            if (!isPauseOn && _pausedState != null)
+            {
+                CurrentState = _pausedState;
+                CurrentState.OnEnter();
+                _pausedState = null;
+                return;
+            }
         }
         
         private void CreateNavigationPanel()
         {
-            _NavigationRoot = new VisualElement();
-            _NavigationRoot.style.flexDirection = FlexDirection.Row;
-            Root.Add(_NavigationRoot);
+            _navigationRoot.style.flexDirection = FlexDirection.Row;
+            Root.Add(_navigationRoot);
         }
     }
 }

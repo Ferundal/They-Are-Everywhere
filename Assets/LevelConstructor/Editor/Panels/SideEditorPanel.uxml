@@ -3,7 +3,7 @@
     <ui:Button display-tooltip-when-elided="true" name="navigation-button" class="navigation-button" style="background-image: url(&apos;project://database/Assets/LevelConstructor/Texturies/BakeButton.png?fileID=2800000&amp;guid=12a6894c723f125449a1b04abca81743&amp;type=3#BakeButton&apos;);" />
     <ui:VisualElement name="body">
         <ui:VisualElement name="level_property_field" />
-        <ui:Button text="Bake" display-tooltip-when-elided="true" name="bake" />
+        <ui:Button text="Сreate Surfaces" display-tooltip-when-elided="true" name="create_surfaces" />
         <ui:ProgressBar value="22" title="baking..." name="progress_bar" />
     </ui:VisualElement>
 </ui:UXML>

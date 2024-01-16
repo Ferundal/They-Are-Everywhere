@@ -31,5 +31,33 @@ namespace LevelConstructor
 
             return next;
         }
+
+        public static VoxelDirection GetOpposite(VoxelDirection voxelDirection)
+        {
+            VoxelDirection direction = new();
+            switch (voxelDirection)
+            {
+                case VoxelDirection.Up:
+                    direction = VoxelDirection.Down;
+                    break;
+                case VoxelDirection.Down:
+                    direction =  VoxelDirection.Up;
+                    break;
+                case VoxelDirection.Right:
+                    direction =  VoxelDirection.Left;
+                    break;
+                case VoxelDirection.Left:
+                    direction =  VoxelDirection.Left;
+                    break;
+                case VoxelDirection.Forward:
+                    direction =  VoxelDirection.Backward;
+                    break;
+                case VoxelDirection.Backward:
+                    direction =  VoxelDirection.Forward;
+                    break;
+            }
+
+            return direction;
+        }
     }
 }

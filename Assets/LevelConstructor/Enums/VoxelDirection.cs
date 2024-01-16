@@ -4,8 +4,8 @@ namespace LevelConstructor
     {
         Up,
         Down,
-        Left,
         Right,
+        Left,
         Forward,
         Backward
     }

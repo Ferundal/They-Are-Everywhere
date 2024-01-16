@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,39 +9,47 @@ using UnityEngine.UIElements;
 namespace LevelConstructor
 {
     [CustomEditor(typeof(LevelConstructor))]
-    public class LevelConstructorEditor : UnityEditor.Editor
+    public class LevelConstructorEditor : Editor
     {
         public LevelConstructor _levelConstructor;
-        
-        public SerializedProperty levelScriptableObject;
-        public PropertyField levelPropertyField;
 
+        private SerializedProperty _levelSerializedProperty;
+        private PropertyField _levelPropertyField;
+
+        private VisualElement _root;
         private FSM _fsm;
-        private State _initialState;
-        
+
         private EventHandler _eventHandler;
         private void OnEnable()
         {
+            Debug.Log("Editor1");
             _levelConstructor = target as LevelConstructor;
+            _root = new();
             _eventHandler = _levelConstructor.Handler;
             _fsm = new FSM();
             SceneView.duringSceneGui += OnDuringSceneGui;
-            _eventHandler.OnGUIStart += SetInitialState;
             _eventHandler.HasUnprocessedGUIStart = true;
         }
 
         private void OnDisable()
         {
             SceneView.duringSceneGui -= OnDuringSceneGui;
+            _eventHandler.OnAfterDeserialize -= CheckLevelSerializedProperty;
             _fsm.OnDestroy();
         }
 
         public override VisualElement CreateInspectorGUI()
         {
-            levelScriptableObject = serializedObject.FindProperty("level");
-            levelPropertyField = new PropertyField(levelScriptableObject);
+            _levelSerializedProperty = serializedObject.FindProperty("level");
+            _levelPropertyField = new PropertyField(_levelSerializedProperty);
+            _root.Add(_levelPropertyField);
+            
             CreateFSMStates();
-            return _fsm.Root;
+            CheckLevelSerializedProperty();
+
+            _eventHandler.OnAfterDeserialize += CheckLevelSerializedProperty;
+            
+            return _root;
         }
 
         private void OnSceneGUI()
@@ -53,26 +64,38 @@ namespace LevelConstructor
         private void CreateFSMStates()
         {
             var visualPanel = new VisualPanel(
-                $"{PathUtility.PanelsPath}/PaintPanel.uxml", 
+                $"{PathUtility.PanelsPath}/VoxelEditorPanel.uxml", 
                 $"{PathUtility.PanelsPath}/Panel.uss");
-            var paintState = new Paint(visualPanel, _eventHandler, _levelConstructor);
-            _initialState = paintState;
-            _fsm.Add(paintState);
+            var voxelEditor = new VoxelEditor(visualPanel, _eventHandler, _levelConstructor);
+            _fsm.Add(voxelEditor);
 
             visualPanel = new VisualPanel(
-                $"{PathUtility.PanelsPath}/BakePanel.uxml",
+                $"{PathUtility.PanelsPath}/SideEditorPanel.uxml",
                 $"{PathUtility.PanelsPath}/Panel.uss");
-            var bakeState = new Bake(visualPanel, this);
-            _fsm.Add(bakeState);
-            
-            _fsm.Transition(bakeState);
+            var sideEditor = new SideEditor(visualPanel, this);
+            _fsm.Add(sideEditor);
         }
 
-        void SetInitialState()
+        private void CheckLevelSerializedProperty()
         {
-            _eventHandler.OnGUIStart -= SetInitialState;
-            _fsm.Transition(_initialState);
+            if (_levelSerializedProperty.objectReferenceValue == null)
+            {
+                _fsm.SetPause(true);
+                if (_root.childCount > 1)
+                {
+                    _root.RemoveAt(1);
+                }
+            }
+            else
+            {
+                _fsm.SetPause(false);
+                if (_root.childCount < 2)
+                {
+                    _root.Add(_fsm.Root);
+                }
+            }
         }
+        
         
         void OnDuringSceneGui(SceneView sceneView)
         {

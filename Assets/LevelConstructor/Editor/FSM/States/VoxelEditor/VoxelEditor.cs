@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace LevelConstructor
 {
-    public class Paint : State
+    public class VoxelEditor : State
     {
         private EventHandler _eventHandler;
         private LevelConstructor _levelConstructor;
@@ -18,7 +18,7 @@ namespace LevelConstructor
 
         public override VisualElement Root => Panel.Body;
 
-        public Paint(VisualPanel panel, EventHandler eventHandler, LevelConstructor levelConstructor) : base(panel)
+        public VoxelEditor(VisualPanel panel, EventHandler eventHandler, LevelConstructor levelConstructor) : base(panel)
         {
             _eventHandler = eventHandler;
             _levelConstructor = levelConstructor;

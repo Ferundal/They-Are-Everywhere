@@ -17,10 +17,14 @@ namespace LevelConstructor
         [HideInInspector] public LevelConstructorRaycaster Raycaster { get; private set; }
         [HideInInspector][SerializeField] private List<Voxel> voxels;
 
+        private Transform _voxelParent;
+        private Transform _shapesParent;
+
         public EventHandler Handler { get; } = new();
 
         private void OnEnable()
         {
+            Debug.Log("Script");
             LoadVoxelPrefabs();
             Raycaster = new LevelConstructorRaycaster(this);
             OptimizeVoxelsList();
@@ -49,10 +53,8 @@ namespace LevelConstructor
         private void LoadVoxelPrefabs()
         {
             voxelPrefabs = new List<Voxel>();
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{PathUtility.VoxelPrefabsPath}/GrayBlock.prefab");
-            voxelPrefabs.Add(prefab.GetComponent<Voxel>());
-            prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{PathUtility.VoxelPrefabsPath}/RedBlock.prefab");
-            voxelPrefabs.Add(prefab.GetComponent<Voxel>());
+            LoadVoxelPrefab("GrayBlock.prefab");
+            LoadVoxelPrefab("RedBlock.prefab");
         }
 
         private void OptimizeVoxelsList()
@@ -62,12 +64,19 @@ namespace LevelConstructor
 
         public void OnBeforeSerialize()
         {
+            
             //Debug.Log("OnBeforeSerialize");
         }
 
         public void OnAfterDeserialize()
         {
             Handler.HasUnprocessedDeserialization = true;
+        }
+
+        private void LoadVoxelPrefab(string prefabName)
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{PathUtility.VoxelPrefabsPath}/{prefabName}");
+            voxelPrefabs.Add(prefab.GetComponent<Voxel>());
         }
     }
 }
