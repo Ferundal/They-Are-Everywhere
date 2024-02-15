@@ -26,7 +26,7 @@ namespace LevelConstructor
         {
             _levelConstructorEditor = levelConstructorEditor;
 
-            _button = Panel.Body.Q<Button>("create_surfaces");
+            _button = Panel.Body.Q<Button>("create_sides");
             _button.clicked += () => CreateSides();
             
             _progressBar = Panel.Body.Q<ProgressBar>("progress_bar");
@@ -49,7 +49,7 @@ namespace LevelConstructor
         private void CreateSides()
         {
             _isBaking = true;
-            Root.RemoveAt(1);
+            Root.RemoveAt(0);
             AssembleOptionalBakingStatusPanels();
         }
         

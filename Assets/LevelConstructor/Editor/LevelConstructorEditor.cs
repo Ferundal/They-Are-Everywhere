@@ -22,7 +22,6 @@ namespace LevelConstructor
         private EventHandler _eventHandler;
         private void OnEnable()
         {
-            Debug.Log("Editor1");
             _levelConstructor = target as LevelConstructor;
             _root = new();
             _eventHandler = _levelConstructor.Handler;
@@ -40,7 +39,7 @@ namespace LevelConstructor
 
         public override VisualElement CreateInspectorGUI()
         {
-            _levelSerializedProperty = serializedObject.FindProperty("level");
+            _levelSerializedProperty = serializedObject.FindProperty("levelSO");
             _levelPropertyField = new PropertyField(_levelSerializedProperty);
             _root.Add(_levelPropertyField);
             
@@ -74,6 +73,12 @@ namespace LevelConstructor
                 $"{PathUtility.PanelsPath}/Panel.uss");
             var sideEditor = new SideEditor(visualPanel, this);
             _fsm.Add(sideEditor);
+            
+            visualPanel = new VisualPanel(
+                $"{PathUtility.PanelsPath}/NavMeshBakerPanel.uxml",
+                $"{PathUtility.PanelsPath}/Panel.uss");
+            var navMeshBaker = new NavMeshBaker(visualPanel);
+            _fsm.Add(navMeshBaker);
         }
 
         private void CheckLevelSerializedProperty()

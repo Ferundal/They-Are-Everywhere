@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,20 +6,22 @@ namespace LevelConstructor
 {
     public class VoxelEditor : State
     {
+        
+        public VoxelEditorRaycaster Raycaster { get; private set; }
+        
         private EventHandler _eventHandler;
         private LevelConstructor _levelConstructor;
-        private Brush [] _brushes;
+        private List<Brush> _brushes = new();
         private Brush _currentBrush;
         private Vector3Int _touchedVoxelPosition = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
         private Vector3Int _newTouchedVoxelPosition = new();
-        private VoxelDirection _voxelDirection = new();
-        private VoxelDirection _newVoxelDirection = new();
         private Vector3Int _brushPosition;
 
         public override VisualElement Root => Panel.Body;
 
         public VoxelEditor(VisualPanel panel, EventHandler eventHandler, LevelConstructor levelConstructor) : base(panel)
         {
+            Raycaster = new VoxelEditorRaycaster(levelConstructor);
             _eventHandler = eventHandler;
             _levelConstructor = levelConstructor;
             InitiateBrushes();
@@ -44,12 +46,11 @@ namespace LevelConstructor
             if (_currentBrush == null) return;
             if (!_currentBrush.BrushPlacementMarker.IsActive) return;
             
-            _levelConstructor.AddVoxel(_currentBrush.VoxelPrefab, _brushPosition);
         }
 
         private void ChangeBrushPosition(Event currentEvent)
         {
-            if (!_levelConstructor.Raycaster.ScreenPositionToVoxelPosition(
+            /*if (!_levelConstructor.Raycaster.ScreenPositionToVoxelPosition(
                     currentEvent.mousePosition, 
                     ref _newTouchedVoxelPosition, 
                     ref _newVoxelDirection,
@@ -66,18 +67,19 @@ namespace LevelConstructor
             _voxelDirection = _newVoxelDirection;
             _currentBrush.BrushPlacementMarker.IsActive = true;
             _brushPosition = VoxelPositionUtility.NextInDirection(_touchedVoxelPosition, _voxelDirection);
-            _currentBrush.BrushPlacementMarker.Position = _levelConstructor.VoxelPositionToWorldPosition(_brushPosition, _currentBrush.VoxelPrefab);
+            _currentBrush.BrushPlacementMarker.Position = _levelConstructor.VoxelPositionToWorldPosition(_brushPosition, _currentBrush.VoxelPrefab);*/
         }
         
         public override void OnSceneGUI()
         {
-            _currentBrush.BrushPlacementMarker.Render();
+//            _currentBrush.BrushPlacementMarker.Render();
         }
 
         private void InitiateBrushes()
         {
-            var voxelPrefabs = _levelConstructor.voxelPrefabs;
-            _brushes = voxelPrefabs.Select(item => new Brush(item)).ToArray();
+            /*_brushes.Add(new Brush("GrayBlock.prefab"));
+            _brushes.Add(new Brush("RedBlock.prefab"));
+            _brushes.Add(new Brush("Floor.prefab"));
             var panelSelector = Panel.Body.Q<DropdownField>("brush_selector");
             panelSelector.choices.Clear();
             foreach (var brush in _brushes)
@@ -90,12 +92,7 @@ namespace LevelConstructor
             {
                 panelSelector.value = evt.newValue;
                 _currentBrush = _brushes[panelSelector.index];
-            });
-        }
-        
-        private void OnDropdownValueChanged(int index)
-        {
-            Debug.Log("Выбран элемент с индексом: " + index);
+            });*/
         }
     }
 }

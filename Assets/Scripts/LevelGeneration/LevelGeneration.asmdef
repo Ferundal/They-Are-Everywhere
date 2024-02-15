@@ -1,8 +1,8 @@
 {
-    "name": "LevelConstructor",
+    "name": "LevelGeneration",
     "rootNamespace": "",
     "references": [
-        "GUID:7a08824e3ccb4e86a44fcac32d2c317c"
+        "GUID:377debf90d154373925ce903befaa34f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

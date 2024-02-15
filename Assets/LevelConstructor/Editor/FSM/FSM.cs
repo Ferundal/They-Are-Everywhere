@@ -21,7 +21,7 @@ namespace LevelConstructor
 
         public void OnDestroy()
         {
-            CurrentState.OnExit();
+            CurrentState?.OnExit();
         }
 
         public void Add(State newState)
