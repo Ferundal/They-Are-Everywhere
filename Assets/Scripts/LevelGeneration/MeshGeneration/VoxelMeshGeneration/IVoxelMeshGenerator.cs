@@ -2,7 +2,7 @@ namespace LevelGeneration
 {
     public interface IVoxelMeshGenerator
     {
-        public MeshInfo GenerateSideMeshInfo(Side side, Voxel voxel);
+        public MeshInfo GenerateSideMeshInfo(Side side);
 
         public void GenerateMesh(Voxel voxel);
     }

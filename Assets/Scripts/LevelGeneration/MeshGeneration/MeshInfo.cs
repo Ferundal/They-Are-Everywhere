@@ -16,7 +16,7 @@ namespace LevelGeneration
                 var vector3Array = new Vector3[Points.Count];
                 for (var index = 0; index < Points.Count; index++)
                 {
-                    var position = Points[index].ParentVoxel.ParentShape.ParentLevel.GetPointPosition(Points[index]);
+                    var position = Points[index].Position;
                     vector3Array[index] = position;
                 }
 

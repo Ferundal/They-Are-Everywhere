@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using UnityEngine;
 
 namespace LevelConstructor
@@ -34,12 +35,22 @@ namespace LevelConstructor
         private static void AddMesh(GameObject gameObject, Side side)
         {
             var mesh = new Mesh();
-            
-            Debug.Log(side.sideSO.MeshInfo.ToString());
 
-            mesh.vertices = side.sideSO.MeshInfo.PointsAsVector3s;
-            mesh.triangles = side.sideSO.MeshInfo.TrianglesVertexIndexes.ToArray();
+            var meshInfo = side.sideSO.MeshInfo;
+            mesh.vertices = meshInfo.PointsAsVector3s;
+            mesh.triangles = meshInfo.TrianglesVertexIndexes.ToArray();
+
             
+            StringBuilder stringBuilder = new();
+            
+            
+            
+            foreach (var triangle in mesh.triangles)
+            {
+                stringBuilder.Append($"{mesh.vertices[triangle]}");
+            }
+            
+            Debug.Log(stringBuilder);
 
             mesh.RecalculateNormals();
 

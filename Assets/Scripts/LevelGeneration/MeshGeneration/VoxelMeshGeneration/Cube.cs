@@ -1,8 +1,11 @@
+using System.Linq;
+using UnityEngine;
+
 namespace LevelGeneration
 {
     public class Cube : IVoxelMeshGenerator
     {
-        public MeshInfo GenerateSideMeshInfo(Side side, Voxel voxel)
+        public MeshInfo GenerateSideMeshInfo(Side side)
         {
             var meshInfo = new MeshInfo();
 

@@ -18,16 +18,6 @@ namespace LevelGeneration
             LoadVoxelsIntoMatrixAndEstablishConnections();
         }
 
-
-        public Vector3 GetPointPosition(Point point)
-        {
-            var doubleVoxelPosition = point.ParentVoxel.position * 2;
-            var aboveGroundDoubleVoxelPosition = doubleVoxelPosition + Vector3Int.one;
-            var doublePointPosition = aboveGroundDoubleVoxelPosition - point.DirectionToPoint;
-            var floatPointPosition = new Vector3(doublePointPosition.x, doublePointPosition.y, doublePointPosition.z) * (voxelSize / 2.0f);
-            return floatPointPosition;
-        }
-
         private void LoadVoxelsIntoMatrixAndEstablishConnections()
         {
             List<Side> sides = new();
@@ -116,7 +106,7 @@ namespace LevelGeneration
                     continue;
                 }
 
-                var neighborDirectionToPoint = pointDirection - (directionsToPointNeighbor * 2);
+                var neighborDirectionToPoint = (directionsToPointNeighbor * 2) - pointDirection;
                         
                 if (neighbor.Points.TryGetValue(neighborDirectionToPoint, out point))
                 {

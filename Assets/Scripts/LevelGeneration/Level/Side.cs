@@ -38,6 +38,6 @@ namespace LevelGeneration
             }
         }
         
-        public MeshInfo MeshInfo => ParentVoxel.VoxelType.MeshGenerator.GenerateSideMeshInfo(this, ParentVoxel);
+        public MeshInfo MeshInfo => ParentVoxel.VoxelType.MeshGenerator.GenerateSideMeshInfo(this);
     }
 }

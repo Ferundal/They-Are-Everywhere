@@ -13,6 +13,19 @@ namespace LevelGeneration
             DirectionToPoint = directionToPoint;
         }
 
+        public Vector3 Position
+        {
+            get
+            {
+                var doubleVoxelPosition = ParentVoxel.position * 2;
+                var aboveGroundDoubleVoxelPosition = doubleVoxelPosition + Vector3Int.one;
+                var doublePointPosition = aboveGroundDoubleVoxelPosition - DirectionToPoint;
+                var voxelSize = ParentVoxel.ParentShape.ParentLevel.voxelSize;
+                var floatPointPosition = new Vector3(doublePointPosition.x, doublePointPosition.y, doublePointPosition.z) * (voxelSize / 2.0f);
+                return floatPointPosition;
+            }
+        }
+
         public static Vector3Int[] NeighborVoxelDirections(Vector3Int directionToExcludedVoxel)
         {
             Vector3Int[] directions = new Vector3Int[7];
