@@ -27,7 +27,5 @@ namespace LevelConstructor
                 shapes.Add(newShape);
             }
         }
-        
-        
     }
 }

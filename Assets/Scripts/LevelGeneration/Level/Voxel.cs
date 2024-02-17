@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LevelGeneration
 {
@@ -19,12 +20,18 @@ namespace LevelGeneration
 
         [NonSerialized] public Shape ParentShape;
         
-        public string typeName;
+        public string voxelTypeName;
         [NonSerialized] public VoxelType VoxelType;
         public Vector3Int position;
-        public List<Side> sides;
+        public List<Side> sides = new();
 
         public Dictionary<Vector3Int, Point> Points = new();
+
+        public Voxel() {}
+        public Voxel(string voxelTypeName = "Empty")
+        {
+            this.voxelTypeName = voxelTypeName;
+        }
 
         public static Vector3Int[] FindDirectionsToPointNeighbors(Vector3Int directionToVoxelPoint)
         {

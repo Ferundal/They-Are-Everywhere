@@ -23,10 +23,10 @@ namespace LevelConstructor
             ref VoxelDirection voxelDirection,
             Brush brush)
         {
-            /*_ray = HandleUtility.GUIPointToWorldRay(screenPosition);
+            _ray = HandleUtility.GUIPointToWorldRay(screenPosition);
 
-            if (Physics.Raycast(_ray, out _hitInfo) 
-                && _hitInfo.collider.gameObject.TryGetComponent<Voxel>(out var voxel)
+            /*if (Physics.Raycast(_ray, out _hitInfo) 
+                && _hitInfo.collider.gameObject.TryGetComponent<Side>(out var voxel)
                 && voxel.levelConstructor == _levelConstructor)
             {
                 voxelPosition = voxel.position;

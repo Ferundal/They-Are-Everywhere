@@ -9,6 +9,6 @@ namespace LevelGeneration
         [NonSerialized] public Level ParentLevel;
         
         public string shapeName;
-        public List<Voxel> voxels;
+        public List<Voxel> voxels = new();
     }
 }

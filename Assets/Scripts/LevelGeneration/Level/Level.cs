@@ -8,11 +8,17 @@ namespace LevelGeneration
     public class Level : ScriptableObject
     {
         public float voxelSize;
+        public Vector3 zeroVoxelWorldOffset = new Vector3(0.5f, 0.5f, 0.5f);
         public List<Shape> shapes = new();
         private ThreeDimensionalMatrix<Voxel> _voxelMatrix;
         private readonly VoxelPalette _voxelPalette = new();
 
         private void OnEnable()
+        {
+            Initialize();
+        }
+
+        public void Initialize()
         {
             _voxelMatrix = new ThreeDimensionalMatrix<Voxel>();
             LoadVoxelsIntoMatrixAndEstablishConnections();
@@ -28,7 +34,7 @@ namespace LevelGeneration
                 {
                     if (!TrySetVoxelType(voxel))
                     {
-                        Debug.LogWarning($"$Voxel type \"{voxel.typeName}\" not found. Voxel do not added to level");
+                        Debug.LogWarning($"$Voxel type \"{voxel.voxelTypeName}\" not found. Voxel do not added to level");
                         continue;
                     }
                     
@@ -51,7 +57,7 @@ namespace LevelGeneration
 
         private bool TrySetVoxelType(Voxel voxel)
         {
-            var voxelType = _voxelPalette.GetVoxelType(voxel.typeName);
+            var voxelType = _voxelPalette.GetVoxelType(voxel.voxelTypeName);
 
             if (voxelType == null)
             {

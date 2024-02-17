@@ -24,6 +24,7 @@ namespace LevelGeneration
             }
         }
 
+#if UNITY_EDITOR
         public override string ToString()
         {
             var points = PointsAsVector3s;
@@ -44,4 +45,5 @@ namespace LevelGeneration
             return stringBuilder.ToString();
         }
     }
+#endif
 }

@@ -1,18 +1,23 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 namespace LevelGeneration
 {
     [CreateAssetMenu(fileName = "NewVoxelType", menuName = "Voxel Type/New Voxel Type")]
     public class VoxelType : ScriptableObject
     {
+        //TODO can be replaced with Zenject?
         [SerializeField] private MonoScript meshGeneratorScript;
-
         public IVoxelMeshGenerator MeshGenerator;
 
         private void OnEnable()
+        {
+            CreateMeshGenerator();
+        }
+
+        private void CreateMeshGenerator()
         {
             if (meshGeneratorScript == null)
             {
