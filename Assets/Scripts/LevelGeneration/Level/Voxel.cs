@@ -8,7 +8,8 @@ namespace LevelGeneration
     [Serializable]
     public class Voxel
     {
-        public static Vector3Int[] SideDirections = new Vector3Int[6]
+        public const string DefaultVoxelTypeName = "Empty";
+        public static Vector3Int[] SideDirections = new Vector3Int[6] //TODO move to side class
         {
             Vector3Int.up,
             Vector3Int.down,
@@ -20,7 +21,7 @@ namespace LevelGeneration
 
         [NonSerialized] public Shape ParentShape;
         
-        public string voxelTypeName;
+        public string voxelTypeName = DefaultVoxelTypeName;
         [NonSerialized] public VoxelType VoxelType;
         public Vector3Int position;
         public List<Side> sides = new();
@@ -28,7 +29,7 @@ namespace LevelGeneration
         public Dictionary<Vector3Int, Point> Points = new();
 
         public Voxel() {}
-        public Voxel(string voxelTypeName = "Empty")
+        public Voxel(string voxelTypeName)
         {
             this.voxelTypeName = voxelTypeName;
         }

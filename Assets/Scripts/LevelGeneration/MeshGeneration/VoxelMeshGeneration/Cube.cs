@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -21,10 +22,7 @@ namespace LevelGeneration
 
         public void GenerateMesh(Voxel voxel)
         {
-            foreach (var side in voxel.sides)
-            {
-                
-            }
+            
         }
     }
 }

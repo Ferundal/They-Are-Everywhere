@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 
 namespace LevelGeneration
 {
     public class Surface
     {
-        private MeshInfo _meshInfo = new();
+        public MeshInfo MeshInfo { get; private set; } = new();
+        
         public Surface(List<Side> sides)
         {
+            
             foreach (var side in sides)
             {
                 AddMeshToSurface(side.MeshInfo);
@@ -16,34 +18,26 @@ namespace LevelGeneration
 
         private void AddMeshToSurface(MeshInfo meshInfo)
         {
-            var indexOffset = _meshInfo.Points.Count;
-            AddOffsetToIndexes(meshInfo.TrianglesVertexIndexes, indexOffset);
+            var indexOffset = MeshInfo.Points.Count;
+            meshInfo.AddOffsetToIndexes(indexOffset);
                 
             RemovePointDuplicates(meshInfo, indexOffset);
             
-            _meshInfo.TrianglesVertexIndexes.AddRange(meshInfo.TrianglesVertexIndexes);
-        }
-
-        private void AddOffsetToIndexes(List<int> indexesList, int indexOffset)
-        {
-            for (int index = 0; index < indexesList.Count; index++)
-            {
-                indexesList[index] += indexOffset;
-            }
+            MeshInfo.TrianglesVertexIndexes.AddRange(meshInfo.TrianglesVertexIndexes);
         }
 
         private void RemovePointDuplicates(MeshInfo meshInfo, int indexOffset)
         {
             for (var index = 0; index < meshInfo.Points.Count; index++)
             {
-                var existingIndex = _meshInfo.Points.IndexOf(meshInfo.Points[index]);
+                var existingIndex = MeshInfo.Points.IndexOf(meshInfo.Points[index]);
                 if (existingIndex  != -1)
                 {
                     ReplaceVertexIndexes(meshInfo.TrianglesVertexIndexes, index + indexOffset, existingIndex);
                 }
                 else
                 {
-                    _meshInfo.Points.Add(meshInfo.Points[index]);
+                    MeshInfo.Points.Add(meshInfo.Points[index]);
                 }
             }
         }

@@ -65,7 +65,7 @@ namespace LevelConstructor
             var visualPanel = new VisualPanel(
                 $"{PathUtility.PanelsPath}/VoxelEditorPanel.uxml", 
                 $"{PathUtility.PanelsPath}/Panel.uss");
-            var voxelEditor = new VoxelEditor(visualPanel, _eventHandler, _levelConstructor);
+            var voxelEditor = new VoxelEditor(visualPanel, _levelConstructor);
             _fsm.Add(voxelEditor);
 
             visualPanel = new VisualPanel(

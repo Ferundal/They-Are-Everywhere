@@ -17,12 +17,10 @@ namespace LevelGeneration
         {
             get
             {
-                var voxelPosition = ParentVoxel.position;
-                var worldVoxelPosition = new Vector3(voxelPosition.x, voxelPosition.y, voxelPosition.z);
+                var worldVoxelPosition = ParentVoxel.ParentShape.ParentLevel.VoxelToWorldPosition(ParentVoxel.position);
                 var voxelSize = ParentVoxel.ParentShape.ParentLevel.voxelSize;
                 var pointOffset = new Vector3(DirectionToPoint.x, DirectionToPoint.y, DirectionToPoint.z) * (voxelSize / 2);
-                var zeroVoxelWorldOffset = ParentVoxel.ParentShape.ParentLevel.zeroVoxelWorldOffset * voxelSize;
-                return worldVoxelPosition - (zeroVoxelWorldOffset - pointOffset);
+                return worldVoxelPosition + pointOffset;
             }
         }
 

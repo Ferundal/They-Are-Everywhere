@@ -9,7 +9,15 @@ namespace LevelGeneration
         public List<Point> Points = new();
         public List<int> TrianglesVertexIndexes = new();
 
-        public Vector3[] PointsAsVector3s
+        public MeshInfo(MeshInfo meshInfo)
+        {
+            Points = meshInfo.Points;
+            TrianglesVertexIndexes = new List<int>(meshInfo.TrianglesVertexIndexes);
+        }
+
+        public MeshInfo() { }
+
+        public Vector3[] PointsAsVector3
         {
             get
             {
@@ -24,10 +32,33 @@ namespace LevelGeneration
             }
         }
 
+        public Mesh Mesh
+        {
+            get
+            {
+                var mesh = new Mesh();
+                
+                mesh.vertices = PointsAsVector3;
+                mesh.triangles = TrianglesVertexIndexes.ToArray();
+
+                mesh.RecalculateNormals();
+                
+                return mesh;
+            }
+        }
+
+        public void AddOffsetToIndexes(int indexOffset)
+        {
+            for (int index = 0; index < TrianglesVertexIndexes.Count; index++)
+            {
+                TrianglesVertexIndexes[index] += indexOffset;
+            }
+        }
+
 #if UNITY_EDITOR
         public override string ToString()
         {
-            var points = PointsAsVector3s;
+            var points = PointsAsVector3;
             
             var stringBuilder = new StringBuilder();
 

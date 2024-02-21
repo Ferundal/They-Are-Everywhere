@@ -1,6 +1,6 @@
 namespace LevelConstructor
 {
-    public class SideBuilder
+    public class ShapeSelector
     {
         
     }

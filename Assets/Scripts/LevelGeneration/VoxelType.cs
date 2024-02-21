@@ -12,9 +12,15 @@ namespace LevelGeneration
         [SerializeField] private MonoScript meshGeneratorScript;
         public IVoxelMeshGenerator MeshGenerator;
 
+        public Material Material;
+
         private void OnEnable()
         {
             CreateMeshGenerator();
+            if (Material == null)
+            {
+                Material = new Material(Shader.Find("Standard"));
+            }
         }
 
         private void CreateMeshGenerator()

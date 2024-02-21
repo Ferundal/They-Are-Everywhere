@@ -1,5 +1,3 @@
-using System;
-using System.Text;
 using UnityEngine;
 
 namespace LevelConstructor
@@ -7,86 +5,58 @@ namespace LevelConstructor
     public class Side : MonoBehaviour
     {
         private static LevelGeneration.Voxel _centeredVoxel;
-        private LevelGeneration.Side sideSO;
+        private LevelGeneration.Side _sideSO;
+        
+        public LevelGeneration.Side SideSO => _sideSO;
 
         public static Side Create(LevelGeneration.Side sideSO, GameObject parentGameObject)
         {
             var sideGameObject = new GameObject($"Side (direction = {sideSO.sideDirection.ToString()})");
+            sideGameObject.transform.SetParent(parentGameObject.transform);
             
             var side = (Side)sideGameObject.AddComponent(typeof(Side));
-            side.sideSO = sideSO;
-            
-            sideGameObject.transform.SetParent(parentGameObject.transform);
+            side._sideSO = sideSO;
 
-            AddMesh(sideGameObject, side);
+            var mesh = CenteredVoxel.Side(
+                side.SideSO.sideDirection,
+                side.SideSO.ParentVoxel.VoxelType,
+                side.SideSO.ParentVoxel.ParentShape.ParentLevel.voxelSize).MeshInfo.Mesh;
+            AddMesh(sideGameObject, mesh);
+            
+            AddMaterial(sideGameObject, side._sideSO.ParentVoxel.VoxelType.Material);
+            
+            AddCollider(sideGameObject, mesh);
+
             sideGameObject.transform.localPosition = Vector3.zero;
 
             return side;
         }
 
-        public LevelGeneration.Side GetCenteredVoxelSide()
-        {
-            if (_centeredVoxel == null)
-            {
-                _centeredVoxel = new LevelGeneration.Voxel();
-                _centeredVoxel.voxelTypeName = sideSO.ParentVoxel.voxelTypeName;
-                var shapeSO = new LevelGeneration.Shape();
-                shapeSO.voxels.Add(_centeredVoxel);
-                var levelSO = new LevelGeneration.Level();
-                levelSO.shapes.Add(shapeSO);
-                levelSO.zeroVoxelWorldOffset = Vector3.zero;
-
-                foreach (var direction in LevelGeneration.Voxel.SideDirections)
-                {
-                    var side = new LevelGeneration.Side();
-                    side.sideDirection = direction;
-                    _centeredVoxel.sides.Add(side);
-                }
-                levelSO.Initialize();
-            }
-            else
-            {
-                _centeredVoxel.voxelTypeName = sideSO.ParentVoxel.voxelTypeName;
-            }
-            _centeredVoxel.ParentShape.ParentLevel.voxelSize = sideSO.ParentVoxel.ParentShape.ParentLevel.voxelSize;
-
-            foreach (var side in _centeredVoxel.sides)
-            {
-                if (side.sideDirection == sideSO.sideDirection)
-                {
-                    return side;
-                }
-            }
-
-            return null;
-        }
-        
         public Vector3 OffsetToVoxel
         {
             get
             {
-                var doubleSizeSideOffset = new Vector3(sideSO.sideDirection.x, sideSO.sideDirection.y, sideSO.sideDirection.z);
-                return doubleSizeSideOffset * (sideSO.ParentVoxel.ParentShape.ParentLevel.voxelSize / 2.0f);
+                var doubleSizeSideOffset = new Vector3(_sideSO.sideDirection.x, _sideSO.sideDirection.y, _sideSO.sideDirection.z);
+                return doubleSizeSideOffset * (_sideSO.ParentVoxel.ParentShape.ParentLevel.voxelSize / 2.0f);
             }
         }
 
-        private static void AddMesh(GameObject gameObject, Side side)
+        private static void AddMesh(GameObject gameObject, Mesh mesh)
         {
-            var mesh = new Mesh();
-
-            var meshInfo = side.GetCenteredVoxelSide().MeshInfo;
-            mesh.vertices = meshInfo.PointsAsVector3s;
-            mesh.triangles = meshInfo.TrianglesVertexIndexes.ToArray();
-
-            mesh.RecalculateNormals();
-
             var meshFilter = gameObject.AddComponent<MeshFilter>();
             meshFilter.mesh = mesh;
-            
+        }
+        
+        private static void AddMaterial(GameObject gameObject, Material material)
+        {
             var meshRenderer = gameObject.AddComponent<MeshRenderer>();
-
-            var defaultMaterial  = new Material(Shader.Find("Standard"));
-            meshRenderer.material = defaultMaterial;
+            meshRenderer.material = material;
+        }
+        
+        private static void AddCollider(GameObject gameObject, Mesh mesh)
+        {
+            var meshCollider = gameObject.AddComponent<MeshCollider>();
+            meshCollider.sharedMesh = mesh;
         }
         
     }

@@ -24,6 +24,17 @@ namespace LevelGeneration
             LoadVoxelsIntoMatrixAndEstablishConnections();
         }
 
+        public Vector3 VoxelToWorldPosition(Vector3Int position)
+        {
+            var worldVoxelPosition = (new Vector3(position.x, position.y, position.z) + zeroVoxelWorldOffset) * voxelSize;
+            return worldVoxelPosition;
+        }
+
+        public Voxel GetVoxel(Vector3Int position)
+        {
+            return _voxelMatrix[position];
+        }
+
         private void LoadVoxelsIntoMatrixAndEstablishConnections()
         {
             List<Side> sides = new();
@@ -122,8 +133,8 @@ namespace LevelGeneration
 
             return point != null;
         }
-        
-        public class VoxelPalette
+
+        private class VoxelPalette
         {
             private readonly Dictionary<string, VoxelType> _voxelTypes = new ();
             

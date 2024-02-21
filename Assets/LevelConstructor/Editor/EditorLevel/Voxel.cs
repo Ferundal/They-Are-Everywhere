@@ -12,7 +12,7 @@ namespace LevelConstructor
         public List<Side> sides = new();
 
         private Voxel() { }
-        
+
         public Vector3 Position
         {
             get
@@ -43,5 +43,6 @@ namespace LevelConstructor
 
             return voxel;
         }
+        
     }
 }

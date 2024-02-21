@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace LevelConstructor
@@ -7,7 +8,7 @@ namespace LevelConstructor
     [ExecuteInEditMode]
     public class LevelConstructor : MonoBehaviour, ISerializationCallbackReceiver
     {
-        [SerializeField] private LevelGeneration.Level levelSO;
+        [SerializeField] public LevelGeneration.Level levelSO;
         [HideInInspector] public Level EditorLevel;
 
         public EventHandler Handler { get; } = new();

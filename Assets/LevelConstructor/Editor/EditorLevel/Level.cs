@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LevelGeneration;
 using UnityEngine;
 
 namespace LevelConstructor
@@ -17,6 +18,11 @@ namespace LevelConstructor
             _rootGameObject = rootGameObject;
             
             CreateShapes(rootGameObject, levelSO);
+        }
+
+        public void AddVoxel(VoxelType voxelType, Vector3Int position, Shape shape)
+        {
+            
         }
 
         private void CreateShapes(GameObject rootGameObject, LevelGeneration.Level level)
