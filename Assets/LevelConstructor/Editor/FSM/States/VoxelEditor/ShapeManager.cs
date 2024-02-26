@@ -27,7 +27,7 @@ namespace LevelConstructor
             _shapeSelector = visualPanel.Body.Q<DropdownField>("shape_selector");
             _shapeSelector.choices.Clear();
             
-            foreach (var shape in _level.shapes)
+            foreach (var shape in _level.Shapes)
             {
                 _shapeSelector.choices.Add(shape.shapeSO.shapeName);
             }
@@ -35,7 +35,7 @@ namespace LevelConstructor
             _shapeSelector.RegisterCallback<ChangeEvent<string>>((evt) =>
             {
                 _shapeSelector.value = evt.newValue;
-                CurrentShape = _level.shapes.FirstOrDefault(shape => shape.shapeSO.shapeName == evt.newValue);
+                CurrentShape = _level.Shapes.FirstOrDefault(shape => shape.shapeSO.shapeName == evt.newValue);
             });
         }
 

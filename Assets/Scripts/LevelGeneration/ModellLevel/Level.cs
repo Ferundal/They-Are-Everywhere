@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using LevelConstructor;
 using UnityEngine;
@@ -119,7 +120,7 @@ namespace LevelGeneration
                     continue;
                 }
 
-                var neighborDirectionToPoint = (directionsToPointNeighbor * 2) - pointDirection;
+                var neighborDirectionToPoint = pointDirection - (directionsToPointNeighbor * 2);
                         
                 if (neighbor.Points.TryGetValue(neighborDirectionToPoint, out point))
                 {

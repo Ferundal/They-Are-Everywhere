@@ -55,7 +55,7 @@ namespace LevelConstructor
 
         private void CreateSurfaces()
         {
-            var shapes = _levelConstructorEditor._levelConstructor.EditorLevel.shapes;
+            var shapes = _levelConstructorEditor._levelConstructor.EditorLevel.Shapes;
             
             foreach (var shape in shapes)
             {

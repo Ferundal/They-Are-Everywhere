@@ -6,7 +6,7 @@ namespace LevelConstructor
 {
     public class Level
     {
-        public List<Shape> shapes = new();
+        public List<Shape> Shapes = new();
         public ThreeDimensionalMatrix<Voxel> VoxelMatrix = new ();
 
         private LevelGeneration.Level _levelSO;
@@ -30,7 +30,7 @@ namespace LevelConstructor
             _levelSO.shapes.Add(shapeSO);
             
             var newShape = Shape.Create(shapeSO, _rootGameObject, _levelConstructor);
-            shapes.Add(newShape);
+            Shapes.Add(newShape);
             return newShape;
         }
 
@@ -39,7 +39,7 @@ namespace LevelConstructor
             foreach (var shape in level.shapes)
             {
                 var newShape = Shape.Create(shape, levelConstructor.gameObject, levelConstructor);
-                shapes.Add(newShape);
+                Shapes.Add(newShape);
             }
         }
     }

@@ -29,12 +29,14 @@ namespace LevelGeneration
 
         private void RemovePointDuplicates(MeshInfo meshInfo, int indexOffset)
         {
+            var replaceCounter = 0;
             for (var index = 0; index < meshInfo.Points.Count; index++)
             {
                 var existingIndex = MeshInfo.Points.IndexOf(meshInfo.Points[index]);
                 if (existingIndex  != -1)
                 {
-                    ReplaceVertexIndexes(meshInfo.TrianglesVertexIndexes, index + indexOffset, existingIndex);
+                    ReplaceVertexIndexes(meshInfo.TrianglesVertexIndexes, index + indexOffset - replaceCounter, existingIndex);
+                    ++replaceCounter;
                 }
                 else
                 {
