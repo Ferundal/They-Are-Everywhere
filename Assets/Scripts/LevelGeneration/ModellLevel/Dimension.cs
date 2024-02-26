@@ -5,7 +5,12 @@ namespace LevelGeneration
     public class Dimension<T> where T : new()
     {
         private readonly List<T> _store = new();
-        private int _minIndex = 0;
+        private int _minIndex;
+
+        public Dimension()
+        {
+            _minIndex = 0;
+        }
 
         public T this[int index]
         {
@@ -37,11 +42,11 @@ namespace LevelGeneration
         private void AddPrependElement(int prependSize, T element)
         {
             var prependElements = new List<T>(prependSize);
+            prependElements.Add(element);
             for (int i = prependSize; i > 1; i--)
             {
-                prependElements.Add(new T());
+                prependElements.Add(default(T));
             }
-            prependElements.Add(element);
             _store.InsertRange(0, prependElements);
         }
         
@@ -52,10 +57,11 @@ namespace LevelGeneration
                 _store.Capacity = appendStoreIndex + 1;
             }
 
-            for (int i = _store.Count; i <= appendStoreIndex; i++)
+            for (int i = _store.Count; i < appendStoreIndex; i++)
             {
-                _store.Add(new T());
+                _store.Add(default(T));
             }
+            _store.Add(element);
         }
     }
 }

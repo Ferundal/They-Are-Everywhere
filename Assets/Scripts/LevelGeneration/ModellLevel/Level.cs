@@ -10,7 +10,7 @@ namespace LevelGeneration
         public float voxelSize;
         public Vector3 zeroVoxelWorldOffset = new Vector3(0.5f, 0.5f, 0.5f);
         public List<Shape> shapes = new();
-        private ThreeDimensionalMatrix<Voxel> _voxelMatrix;
+        public ThreeDimensionalMatrix<Voxel> VoxelMatrix;
         private readonly VoxelPalette _voxelPalette = new();
 
         private void OnEnable()
@@ -20,7 +20,7 @@ namespace LevelGeneration
 
         public void Initialize()
         {
-            _voxelMatrix = new ThreeDimensionalMatrix<Voxel>();
+            VoxelMatrix = new ThreeDimensionalMatrix<Voxel>();
             LoadVoxelsIntoMatrixAndEstablishConnections();
         }
 
@@ -30,9 +30,34 @@ namespace LevelGeneration
             return worldVoxelPosition;
         }
 
-        public Voxel GetVoxel(Vector3Int position)
+        public void AddPointsToSides(List<Side> sides)
         {
-            return _voxelMatrix[position];
+            foreach (var side in sides)
+            {
+                foreach (var pointDirection in side.PointDirections)
+                {
+                    if (side.Points.ContainsKey(pointDirection))
+                    {
+                        continue;
+                    }
+
+                    var parentVoxel = side.ParentVoxel;
+
+                    if (parentVoxel.Points.TryGetValue(pointDirection, out var newPoint))
+                    {
+                        side.Points.Add(pointDirection, newPoint);
+                        continue;
+                    }
+
+                    if (!TryGetPointFromNeighborVoxels(side, pointDirection, out newPoint))
+                    {
+                        newPoint = new Point(parentVoxel, pointDirection);
+                    }
+
+                    side.Points.Add(pointDirection, newPoint);
+                    parentVoxel.Points.Add(pointDirection, newPoint);
+                }
+            }
         }
 
         private void LoadVoxelsIntoMatrixAndEstablishConnections()
@@ -49,7 +74,7 @@ namespace LevelGeneration
                         continue;
                     }
                     
-                    _voxelMatrix[voxel.position] = voxel;
+                    VoxelMatrix[voxel.position] = voxel;
 
                     foreach (var side in voxel.sides)
                     {
@@ -79,36 +104,6 @@ namespace LevelGeneration
             return true;
         }
 
-        private void AddPointsToSides(List<Side> sides)
-        {
-            foreach (var side in sides)
-            {
-                foreach (var pointDirection in side.PointDirections)
-                {
-                    if (side.Points.ContainsKey(pointDirection))
-                    {
-                        continue;
-                    }
-
-                    var parentVoxel = side.ParentVoxel;
-
-                    if (parentVoxel.Points.TryGetValue(pointDirection, out var newPoint))
-                    {
-                        side.Points.Add(pointDirection, newPoint);
-                        continue;
-                    }
-
-                    if (!TryGetPointFromNeighborVoxels(side, pointDirection, out newPoint))
-                    {
-                        newPoint = new Point(parentVoxel, pointDirection);
-                    }
-
-                    side.Points.Add(pointDirection, newPoint);
-                    parentVoxel.Points.Add(pointDirection, newPoint);
-                }
-            }
-        }
-        
 
         private bool TryGetPointFromNeighborVoxels(Side side, Vector3Int pointDirection, out Point point)
         {
@@ -116,7 +111,7 @@ namespace LevelGeneration
             foreach (var directionsToPointNeighbor in Voxel.FindDirectionsToPointNeighbors(pointDirection))
             {
                 var neighborPosition = side.ParentVoxel.position + directionsToPointNeighbor;
-                var neighbor = _voxelMatrix[neighborPosition];
+                var neighbor = VoxelMatrix[neighborPosition];
 
                 if (neighbor == null)
                 {

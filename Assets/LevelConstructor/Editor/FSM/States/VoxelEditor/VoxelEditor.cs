@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using LevelGeneration;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,7 +10,9 @@ namespace LevelConstructor
         
         private EventHandler _eventHandler;
         private LevelConstructor _levelConstructor;
-        private BrushPalette _brushPalette;
+        private VisualPanel _visualPanel;
+        private ShapeManager _shapeManager;
+        private BrushSelector _brushSelector;
         private VoxelHit _lastHit = new();
         private VoxelHit _newHit = new();
 
@@ -23,11 +23,13 @@ namespace LevelConstructor
             Raycaster = new VoxelRaycaster(levelConstructor);
             _eventHandler = levelConstructor.Handler;
             _levelConstructor = levelConstructor;
-            _brushPalette = new BrushPalette(panel, _levelConstructor);
+            _visualPanel = panel;
         }
 
         public override void OnEnter()
         {
+            _brushSelector = new BrushSelector(_visualPanel, _levelConstructor);
+            _shapeManager = new ShapeManager(_visualPanel, _levelConstructor);
             _eventHandler.OnMouseMove += ChangeBrushPosition;
             _eventHandler.OnMouseDown += UseBrush;
             base.OnEnter();
@@ -35,6 +37,7 @@ namespace LevelConstructor
 
         public override void OnExit()
         {
+            _shapeManager.OnDestroy();
             _eventHandler.OnMouseMove -= ChangeBrushPosition;
             _eventHandler.OnMouseDown -= UseBrush;
             base.OnExit();
@@ -42,14 +45,14 @@ namespace LevelConstructor
 
         private void UseBrush(Event currentEvent)
         {
-            //_brushPalette.CurrentBrush.UseBrush();
+            _brushSelector.CurrentBrush.UseBrush(_shapeManager.CurrentShape, _lastHit);
         }
 
         private void ChangeBrushPosition(Event currentEvent)
         {
             if (!Raycaster.Raycast(currentEvent.mousePosition, ref _newHit))
             {
-                _brushPalette.CurrentBrush.IsActive = false;
+                _brushSelector.CurrentBrush.IsActive = false;
                 return;
             }
             if (_lastHit == _newHit)
@@ -57,46 +60,19 @@ namespace LevelConstructor
                 return;
             }
 
-            _lastHit.Position = _newHit.Position;
-            _lastHit.Direction = _newHit.Direction;
+            _lastHit.HitVoxelPosition = _newHit.HitVoxelPosition;
+            _lastHit.HitDirection = _newHit.HitDirection;
+            _lastHit.HitSide = _newHit.HitSide;
             
-            _brushPalette.CurrentBrush.Position = _newHit.Position + _newHit.Direction;
-            _brushPalette.CurrentBrush.IsActive = true;
+            _brushSelector.CurrentBrush.Position = _newHit.HitVoxelPosition + _newHit.HitDirection;
+            _brushSelector.CurrentBrush.IsActive = true;
         }
         
         public override void OnSceneGUI()
         {
-            _brushPalette.CurrentBrush.Render();
+            _brushSelector.CurrentBrush.Render();
         }
         
-        private class BrushPalette
-        {
-            private readonly VoxelType[] _voxelTypes;
-            public Brush CurrentBrush;
-            public BrushPalette(VisualPanel visualPanel, LevelConstructor levelConstructor)
-            {
-                var objects = Resources.LoadAll($"{ResourcesPathUtility.VoxelTypeFolder}", typeof(VoxelType));
-                _voxelTypes = new VoxelType [objects.Length];
-                for (int i = 0; i < objects.Length; i++)
-                {
-                    _voxelTypes[i] = (VoxelType)objects[i];
-                }
-                
-                var brushesSelector = visualPanel.Body.Q<DropdownField>("brush_selector");
 
-                CurrentBrush = new Brush(_voxelTypes[0], levelConstructor);
-                
-                foreach (var voxelType in _voxelTypes)
-                {
-                    brushesSelector.choices.Add(voxelType.name);
-                }
-                
-                brushesSelector.RegisterCallback<ChangeEvent<string>>((evt) =>
-                {
-                    brushesSelector.value = evt.newValue;
-                    CurrentBrush.VoxelType = _voxelTypes[brushesSelector.index];
-                });
-            }
-        }
     }
 }

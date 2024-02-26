@@ -10,6 +10,7 @@ namespace LevelConstructor
     {
         [SerializeField] public LevelGeneration.Level levelSO;
         [HideInInspector] public Level EditorLevel;
+        [HideInInspector] public bool IsReload { get; private set; } = false;
 
         public EventHandler Handler { get; } = new();
 
@@ -34,14 +35,17 @@ namespace LevelConstructor
             Handler.HasUnprocessedDeserialization = true;
         }
 
+        
         private void RebuildEditorLevel()
         {
+            IsReload = true;
             foreach (Transform child in transform) {
                 DestroyImmediate(child.gameObject);
             }
+
+            IsReload = false;
             if (levelSO == null) return;
-            
-            EditorLevel = new Level(levelSO, gameObject);
+            EditorLevel = new Level(levelSO, this);
         }
     }
 }

@@ -8,6 +8,9 @@ using UnityEngine.UIElements;
 
 namespace LevelConstructor
 {
+    /// <summary>
+    /// Unity Editor tools for level construction
+    /// </summary>
     [CustomEditor(typeof(LevelConstructor))]
     public class LevelConstructorEditor : Editor
     {
@@ -20,36 +23,51 @@ namespace LevelConstructor
         private FSM _fsm;
 
         private EventHandler _eventHandler;
+        
+        /// <summary>
+        /// Initialization of objects independent from the parent script
+        /// </summary>
         private void OnEnable()
         {
             _levelConstructor = target as LevelConstructor;
+            
             _root = new();
-            _eventHandler = _levelConstructor.Handler;
-            _fsm = new FSM();
-            SceneView.duringSceneGui += OnDuringSceneGui;
-            _eventHandler.HasUnprocessedGUIStart = true;
-        }
-
-        private void OnDisable()
-        {
-            SceneView.duringSceneGui -= OnDuringSceneGui;
-            _eventHandler.OnAfterDeserialize -= CheckLevelSerializedProperty;
-            _fsm.OnDestroy();
-        }
-
-        public override VisualElement CreateInspectorGUI()
-        {
             _levelSerializedProperty = serializedObject.FindProperty("levelSO");
             _levelPropertyField = new PropertyField(_levelSerializedProperty);
             _root.Add(_levelPropertyField);
             
+            _eventHandler = _levelConstructor.Handler;
+            _fsm = new FSM();
+            SceneView.duringSceneGui += OnDuringSceneGui;
+        }
+        
+        /// <summary>
+        /// Initialization of objects dependent from the parent script
+        /// </summary>
+        /// <remarks>
+        /// Some FSM states depend on the EditorLevel field in the parent script, so we ensure their deferred initialization in this method.
+        /// </remarks>
+        public override VisualElement CreateInspectorGUI()
+        { 
             CreateFSMStates();
-            CheckLevelSerializedProperty();
-
-            _eventHandler.OnAfterDeserialize += CheckLevelSerializedProperty;
             
+            // CheckLevelSerializedProperty method use EditorLevel field in the parent script so we can't subscribe it early
+            _eventHandler.OnAfterDeserialize += CheckLevelSerializedProperty;
+            _eventHandler.OnGUIStart += CheckLevelSerializedProperty;
+            
+            // Triggers "OnGUIStart" event here
+            _eventHandler.HasUnprocessedGUIStart = true;
             return _root;
         }
+        
+        private void OnDisable()
+        {
+            SceneView.duringSceneGui -= OnDuringSceneGui;
+            _eventHandler.OnAfterDeserialize -= CheckLevelSerializedProperty;
+            _eventHandler.OnGUIStart -= CheckLevelSerializedProperty;
+            _fsm.OnDestroy();
+        }
+
 
         private void OnSceneGUI()
         {
@@ -81,11 +99,14 @@ namespace LevelConstructor
             _fsm.Add(navMeshBaker);
         }
 
+        /// <summary>
+        /// The method responsible for toggling the level editor interface based on the presence of a reference to the level object
+        /// </summary>
         private void CheckLevelSerializedProperty()
         {
             if (_levelSerializedProperty.objectReferenceValue == null)
             {
-                _fsm.SetPause(true);
+                _fsm.IsActive = false;
                 if (_root.childCount > 1)
                 {
                     _root.RemoveAt(1);
@@ -93,7 +114,8 @@ namespace LevelConstructor
             }
             else
             {
-                _fsm.SetPause(false);
+                
+                _fsm.IsActive = true;
                 if (_root.childCount < 2)
                 {
                     _root.Add(_fsm.Root);
@@ -101,7 +123,9 @@ namespace LevelConstructor
             }
         }
         
-        
+        /// <summary>
+        /// Disables the standard Unity editor controls
+        /// </summary>
         void OnDuringSceneGui(SceneView sceneView)
         {
             HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));

@@ -4,40 +4,26 @@ namespace LevelConstructor
 {
     public class VoxelHit
     {
-        public Vector3Int Position;
-        public Vector3Int Direction;
+        public Vector3Int HitVoxelPosition;
+        public Vector3Int HitDirection;
+        public Side HitSide;
 
         public VoxelHit()
         {
-            Position = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
-            Direction = new Vector3Int();
-        }
-        
-        public static bool operator ==(VoxelHit a, VoxelHit b)
-        {
-            if (ReferenceEquals(a, null))
-            {
-                return ReferenceEquals(b, null);
-            }
-
-
-            return a.Position == b.Position && a.Direction == b.Direction;
-        }
-        
-        public static bool operator !=(VoxelHit a, VoxelHit b)
-        {
-            return !(a == b);
+            HitVoxelPosition = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
+            HitDirection = new Vector3Int();
+            HitSide = null;
         }
         
         public override bool Equals(object obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            if (obj is VoxelHit other)
             {
-                return false;
+                return HitVoxelPosition.Equals(other.HitVoxelPosition)
+                       && HitDirection.Equals(other.HitDirection)
+                       && HitSide == other.HitSide;
             }
-
-            VoxelHit other = (VoxelHit)obj;
-            return Position.Equals(other.Position) && Direction.Equals(other.Direction);
+            return false;
         }
         
         public override int GetHashCode()
@@ -45,10 +31,24 @@ namespace LevelConstructor
             unchecked
             {
                 int hash = 17;
-                hash = hash * 23 + Position.GetHashCode();
-                hash = hash * 23 + Direction.GetHashCode();
+                hash = hash * 23 + HitVoxelPosition.GetHashCode();
+                hash = hash * 23 + HitDirection.GetHashCode();
+                hash = hash * 23 + HitSide.GetHashCode();
                 return hash;
             }
+        }
+
+
+        public static bool operator ==(VoxelHit left, VoxelHit right)
+        {
+            if (ReferenceEquals(left, null))
+                return ReferenceEquals(right, null);
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(VoxelHit left, VoxelHit right)
+        {
+            return !(left == right);
         }
     }
 }

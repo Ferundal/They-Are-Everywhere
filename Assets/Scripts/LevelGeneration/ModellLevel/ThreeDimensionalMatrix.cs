@@ -1,9 +1,10 @@
 using System;
-
 using UnityEngine;
 
 namespace LevelGeneration
 {
+    
+    // TODO replace exception
     public class ThreeDimensionalMatrix<T> where T : new()
     {
         private Dimension<Dimension<Dimension<T>>> _store = new();
@@ -26,28 +27,41 @@ namespace LevelGeneration
             {
                 return _store[xIndex][yIndex][zIndex];
             }
-            catch (ArgumentOutOfRangeException)
+            catch (Exception ex) when (ex is ArgumentOutOfRangeException or NullReferenceException)
             {
                 return default(T);
             }
         }
+        
 
         private void SetElement(int xIndex, int yIndex, int zIndex, T value)
         {
+            Dimension<Dimension<T>> yDimension;
             try
             {
-                var yDimension = _store[xIndex];
+                yDimension = _store[xIndex];
             }
             catch (ArgumentOutOfRangeException)
             {
-                _store[xIndex] = new();
+                yDimension = null;
             }
-            
+
+            if (yDimension == null)
+            {
+                _store[xIndex] = new Dimension<Dimension<T>>();
+            }
+
+            Dimension<T> zDimension;
             try
             {
-                var zDimension = _store[xIndex][yIndex];
+                zDimension = _store[xIndex][yIndex];
             }
             catch (ArgumentOutOfRangeException)
+            {
+                zDimension = null;
+            }
+
+            if (zDimension == null)
             {
                 _store[xIndex][yIndex] = new();
             }

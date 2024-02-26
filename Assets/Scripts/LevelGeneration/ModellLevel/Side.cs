@@ -10,8 +10,7 @@ namespace LevelGeneration
     public class Side
     {
         public Vector3Int sideDirection;
-        [NonSerialized]
-        public Voxel ParentVoxel;
+        [NonSerialized] public Voxel ParentVoxel;
 
         public Dictionary<Vector3Int, Point> Points = new(4);
 

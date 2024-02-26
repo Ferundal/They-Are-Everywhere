@@ -6,30 +6,40 @@ namespace LevelConstructor
 {
     public class Level
     {
+        public bool IsReload = false;
         public int size;
         public List<Shape> shapes = new();
 
         private LevelGeneration.Level _levelSO;
         private GameObject _rootGameObject;
+        private LevelConstructor _levelConstructor;
 
-        public Level(LevelGeneration.Level levelSO, GameObject rootGameObject)
+        public Level(LevelGeneration.Level levelSO, LevelConstructor levelConstructor)
         {
             _levelSO = levelSO;
-            _rootGameObject = rootGameObject;
+            _rootGameObject = levelConstructor.gameObject;
+            _levelConstructor = levelConstructor;
             
-            CreateShapes(rootGameObject, levelSO);
+            CreateShapes(levelConstructor, levelSO);
         }
 
-        public void AddVoxel(VoxelType voxelType, Vector3Int position, Shape shape)
+        public Shape AddShape(string shapeName)
         {
+            var shapeSO = new LevelGeneration.Shape();
+            shapeSO.shapeName = shapeName;
+            shapeSO.ParentLevel = _levelSO;
+            _levelSO.shapes.Add(shapeSO);
             
+            var newShape = Shape.Create(shapeSO, _rootGameObject, _levelConstructor);
+            shapes.Add(newShape);
+            return newShape;
         }
 
-        private void CreateShapes(GameObject rootGameObject, LevelGeneration.Level level)
+        private void CreateShapes(LevelConstructor levelConstructor, LevelGeneration.Level level)
         {
             foreach (var shape in level.shapes)
             {
-                var newShape = new Shape(shape, rootGameObject);
+                var newShape = Shape.Create(shape, levelConstructor.gameObject, levelConstructor);
                 shapes.Add(newShape);
             }
         }

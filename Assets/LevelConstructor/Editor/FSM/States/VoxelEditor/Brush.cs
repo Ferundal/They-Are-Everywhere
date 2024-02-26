@@ -43,9 +43,22 @@ namespace LevelConstructor
             VoxelType = voxelType;
         }
 
-        public void UseBrush(Shape shape)
+        public void UseBrush(Shape shape, VoxelHit voxelHit)
         {
-            _levelConstructor.EditorLevel.AddVoxel(VoxelType, _position, shape);
+            if (!IsActive) return;
+            
+            if (shape == null)
+            {
+                Debug.LogWarning("Select shape to edit");
+                return;
+            }
+            
+            shape.AddVoxel(VoxelType, _position);
+            if (voxelHit.HitSide == null) return;
+            if (voxelHit.HitSide.SideSO.ParentVoxel.ParentShape == shape.shapeSO)
+            {
+                Object.DestroyImmediate(voxelHit.HitSide.gameObject);
+            }
         }
 
         public void Render()

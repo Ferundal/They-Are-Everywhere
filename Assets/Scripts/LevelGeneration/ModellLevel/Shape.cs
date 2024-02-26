@@ -14,6 +14,13 @@ namespace LevelGeneration
         
         public string shapeName;
         public List<Voxel> voxels = new();
+        
+        public Shape () {}
+
+        public Shape(string shapeName)
+        {
+            this.shapeName = shapeName;
+        }
 
         public MeshInfo MeshInfo
         {

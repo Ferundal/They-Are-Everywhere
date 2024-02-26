@@ -5,11 +5,13 @@ using UnityEngine.Serialization;
 
 namespace LevelConstructor
 {
-    [Serializable]
+    [ExecuteInEditMode]
     public class Voxel : MonoBehaviour
     {
         [NonSerialized] public LevelGeneration.Voxel VoxelSO;
         public List<Side> sides = new();
+
+        private LevelConstructor _levelConstructor;
 
         private Voxel() { }
 
@@ -24,19 +26,20 @@ namespace LevelConstructor
             }
         }
 
-        public static Voxel Create(LevelGeneration.Voxel voxelSO, GameObject parentGameObject)
+        public static Voxel Create(LevelGeneration.Voxel voxelSO, GameObject parentGameObject, LevelConstructor levelConstructor)
         {
             var voxelGameObject = new GameObject($"Voxel (position = {voxelSO.position.ToString()})");
             
             voxelGameObject.transform.SetParent(parentGameObject.transform);
             var voxel = (Voxel)voxelGameObject.AddComponent(typeof(Voxel));
             voxel.VoxelSO = voxelSO;
+            voxel._levelConstructor = levelConstructor;
 
             voxelGameObject.transform.localPosition = voxel.Position;
 
             foreach (var sideSO in voxelSO.sides)
             {
-                var side = Side.Create(sideSO, voxelGameObject);
+                var side = Side.Create(sideSO, voxelGameObject, levelConstructor);
                 
                 voxel.sides.Add(side);
             }
@@ -44,5 +47,18 @@ namespace LevelConstructor
             return voxel;
         }
         
+        private void OnDisable()
+        {
+            if (_levelConstructor.IsReload) return;
+            
+            DeleteVoxel();
+        }
+
+        private void DeleteVoxel()
+        {
+            var levelSO = VoxelSO.ParentShape.ParentLevel;
+            levelSO.VoxelMatrix[VoxelSO.position] = null;
+            VoxelSO.ParentShape.voxels.Remove(VoxelSO);
+        }
     }
 }

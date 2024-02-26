@@ -23,6 +23,7 @@ namespace LevelGeneration
         
         public string voxelTypeName = DefaultVoxelTypeName;
         [NonSerialized] public VoxelType VoxelType;
+        
         public Vector3Int position;
         public List<Side> sides = new();
 

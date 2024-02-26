@@ -27,10 +27,11 @@ namespace LevelConstructor
                 && _hitInfo.collider.gameObject.TryGetComponent<Side>(out var side)
                 && side.SideSO.ParentVoxel.ParentShape.ParentLevel == _levelConstructor.levelSO)
             {
-                voxelHit.Position = side.SideSO.ParentVoxel.position;
-                voxelHit.Direction = side.SideSO.sideDirection;
+                voxelHit.HitVoxelPosition = side.SideSO.ParentVoxel.position;
+                voxelHit.HitDirection = side.SideSO.sideDirection;
+                voxelHit.HitSide = side;
                 
-                if (_levelConstructor.levelSO.GetVoxel(voxelHit.Position + voxelHit.Direction) != null)
+                if (_levelConstructor.levelSO.VoxelMatrix[voxelHit.HitVoxelPosition + voxelHit.HitDirection] != null)
                 {
                     return false;
                 }
@@ -41,11 +42,12 @@ namespace LevelConstructor
             if (!FindGroundTouchPosition()) return false;
             
             var cellSize = _levelConstructor.levelSO.voxelSize;
-            voxelHit.Position = new Vector3Int(
+            voxelHit.HitVoxelPosition = new Vector3Int(
                 (int)(Math.Ceiling(_groundTouchPosition.x / cellSize) - 1), 
                 -2,
                 (int)(Math.Ceiling(_groundTouchPosition.z / cellSize)) - 1);
-            voxelHit.Direction = Vector3Int.up;
+            voxelHit.HitDirection = Vector3Int.up;
+            voxelHit.HitSide = null;
             return true;
 
         }

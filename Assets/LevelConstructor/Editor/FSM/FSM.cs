@@ -9,10 +9,26 @@ namespace LevelConstructor
         public State CurrentState { get; private set; } = null;
         public VisualElement Root { get; private set; } = new();
 
-        public StyleSheet StyleSheet;
+        private bool _isActive = false;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                _isActive = value;
+                if (_isActive)
+                {
+                    CurrentState.OnEnter();
+                }
+                else
+                {
+                    CurrentState.OnExit();
+                }
+
+            }
+        }
 
         private readonly VisualElement _navigationRoot = new();
-        private State _pausedState = null;
 
         public FSM()
         {
@@ -29,12 +45,10 @@ namespace LevelConstructor
             _navigationRoot.Add(newState.Panel.NavigationButton);
             newState.Panel.NavigationButton.clicked += () => Transition(newState);
 
-            if (CurrentState == null)
-            {
-                CurrentState = newState;
-                Root.Add(newState.Panel.Body);
-                CurrentState.OnEnter();
-            }
+            if (CurrentState != null) return;
+            
+            CurrentState = newState;
+            Root.Add(newState.Panel.Body);
         }
 
         public void Transition(State state)
@@ -48,28 +62,10 @@ namespace LevelConstructor
 
         public void OnSceneGUI()
         {
+            if (!IsActive) return;
             CurrentState?.OnSceneGUI();
         }
 
-        public void SetPause(bool isPauseOn)
-        {
-            if (isPauseOn && CurrentState != null)
-            {
-                _pausedState = CurrentState;
-                CurrentState.OnExit();
-                CurrentState = null;
-                return;
-            }
-
-            if (!isPauseOn && _pausedState != null)
-            {
-                CurrentState = _pausedState;
-                CurrentState.OnEnter();
-                _pausedState = null;
-                return;
-            }
-        }
-        
         private void CreateNavigationPanel()
         {
             _navigationRoot.style.flexDirection = FlexDirection.Row;

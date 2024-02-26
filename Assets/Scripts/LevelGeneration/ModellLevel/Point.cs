@@ -23,6 +23,7 @@ namespace LevelGeneration
                 return worldVoxelPosition + pointOffset;
             }
         }
+        
 
         public static Vector3Int[] NeighborVoxelDirections(Vector3Int directionToExcludedVoxel)
         {

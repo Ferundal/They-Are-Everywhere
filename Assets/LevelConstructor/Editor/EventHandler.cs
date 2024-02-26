@@ -15,7 +15,7 @@ namespace LevelConstructor
         public bool HasUnprocessedDeserialization = false;
         public Action OnAfterDeserialize;
         
-        public bool HasUnprocessedGUIStart = true;
+        public bool HasUnprocessedGUIStart = false;
         public Action OnGUIStart;
 
         public void ProcessEvent(Event currentEvent)
@@ -37,6 +37,7 @@ namespace LevelConstructor
             }
         }
 
+        
         private void CheckAndInvokeSubEvents()
         {
             if (HasUnprocessedGUIStart)
