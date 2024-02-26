@@ -6,10 +6,11 @@ namespace LevelGeneration
     public class Surface
     {
         public MeshInfo MeshInfo { get; private set; } = new();
+        public Vector3Int Direction { get; private set; }
         
-        public Surface(List<Side> sides)
+        public Surface(List<Side> sides, Vector3Int direction)
         {
-            
+            Direction = direction;
             foreach (var side in sides)
             {
                 AddMeshToSurface(side.MeshInfo);

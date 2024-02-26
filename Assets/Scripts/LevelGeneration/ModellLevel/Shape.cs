@@ -65,7 +65,7 @@ namespace LevelGeneration
 
                 foreach (var view in multiviewProjection)
                 {
-                    surfaces.Add(new Surface(view.Value));
+                    surfaces.Add(new Surface(view.Value, view.Key));
                 }
                 return surfaces;
             }

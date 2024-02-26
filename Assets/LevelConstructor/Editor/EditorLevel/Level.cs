@@ -6,9 +6,8 @@ namespace LevelConstructor
 {
     public class Level
     {
-        public bool IsReload = false;
-        public int size;
         public List<Shape> shapes = new();
+        public ThreeDimensionalMatrix<Voxel> VoxelMatrix = new ();
 
         private LevelGeneration.Level _levelSO;
         private GameObject _rootGameObject;

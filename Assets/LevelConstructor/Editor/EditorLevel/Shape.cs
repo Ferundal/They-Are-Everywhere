@@ -47,10 +47,10 @@ namespace LevelConstructor
 
         private void AddSides(LevelGeneration.Voxel voxelSO)
         {
+            // TODO: [#1] Should be done in one array
             foreach (var sideDirection in LevelGeneration.Voxel.SideDirections)
             {
                 var neighbourVoxelPosition = voxelSO.position + sideDirection;
-                
                 
                 var neighbourVoxel = shapeSO.ParentLevel.VoxelMatrix[neighbourVoxelPosition];
                 if (neighbourVoxel != null)

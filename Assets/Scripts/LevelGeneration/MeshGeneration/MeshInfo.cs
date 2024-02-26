@@ -49,6 +49,7 @@ namespace LevelGeneration
 
         public void AddOffsetToIndexes(int indexOffset)
         {
+            if (indexOffset == 0) return;
             for (int index = 0; index < TrianglesVertexIndexes.Count; index++)
             {
                 TrianglesVertexIndexes[index] += indexOffset;

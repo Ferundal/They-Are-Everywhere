@@ -26,11 +26,11 @@ namespace LevelConstructor
                 side.SideSO.sideDirection,
                 side.SideSO.ParentVoxel.VoxelType,
                 side.SideSO.ParentVoxel.ParentShape.ParentLevel.voxelSize).MeshInfo.Mesh;
-            AddMesh(sideGameObject, mesh);
+            MeshUtility.AddMesh(sideGameObject, mesh);
             
-            AddMaterial(sideGameObject, side._sideSO.ParentVoxel.VoxelType.Material);
+            MeshUtility.AddMaterial(sideGameObject, side._sideSO.ParentVoxel.VoxelType.Material);
             
-            AddCollider(sideGameObject, mesh);
+            MeshUtility.AddCollider(sideGameObject, mesh);
 
             sideGameObject.transform.localPosition = Vector3.zero;
 
@@ -45,32 +45,13 @@ namespace LevelConstructor
                 return doubleSizeSideOffset * (_sideSO.ParentVoxel.ParentShape.ParentLevel.voxelSize / 2.0f);
             }
         }
-        
+
         private void OnDisable()
         {
             if (_levelConstructor.IsReload) return;
-            
+
             _sideSO.ParentVoxel.sides.Remove(_sideSO);
         }
-        
 
-        private static void AddMesh(GameObject gameObject, Mesh mesh)
-        {
-            var meshFilter = gameObject.AddComponent<MeshFilter>();
-            meshFilter.mesh = mesh;
-        }
-        
-        private static void AddMaterial(GameObject gameObject, Material material)
-        {
-            var meshRenderer = gameObject.AddComponent<MeshRenderer>();
-            meshRenderer.material = material;
-        }
-        
-        private static void AddCollider(GameObject gameObject, Mesh mesh)
-        {
-            var meshCollider = gameObject.AddComponent<MeshCollider>();
-            meshCollider.sharedMesh = mesh;
-        }
-        
     }
 }

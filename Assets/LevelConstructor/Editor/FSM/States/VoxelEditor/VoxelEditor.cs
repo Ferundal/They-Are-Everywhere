@@ -13,8 +13,8 @@ namespace LevelConstructor
         private VisualPanel _visualPanel;
         private ShapeManager _shapeManager;
         private BrushSelector _brushSelector;
-        private VoxelHit _lastHit = new();
-        private VoxelHit _newHit = new();
+        private Vector3Int _lastHit = new();
+        private Vector3Int _newHit = new();
 
         public override VisualElement Root => Panel.Body;
 
@@ -37,7 +37,7 @@ namespace LevelConstructor
 
         public override void OnExit()
         {
-            _shapeManager.OnDestroy();
+            _shapeManager?.OnDestroy();
             _eventHandler.OnMouseMove -= ChangeBrushPosition;
             _eventHandler.OnMouseDown -= UseBrush;
             base.OnExit();
@@ -45,7 +45,7 @@ namespace LevelConstructor
 
         private void UseBrush(Event currentEvent)
         {
-            _brushSelector.CurrentBrush.UseBrush(_shapeManager.CurrentShape, _lastHit);
+            _brushSelector.CurrentBrush.UseBrush(_shapeManager.CurrentShape);
         }
 
         private void ChangeBrushPosition(Event currentEvent)
@@ -60,11 +60,8 @@ namespace LevelConstructor
                 return;
             }
 
-            _lastHit.HitVoxelPosition = _newHit.HitVoxelPosition;
-            _lastHit.HitDirection = _newHit.HitDirection;
-            _lastHit.HitSide = _newHit.HitSide;
-            
-            _brushSelector.CurrentBrush.Position = _newHit.HitVoxelPosition + _newHit.HitDirection;
+            _lastHit = _newHit;
+            _brushSelector.CurrentBrush.Position = _newHit;
             _brushSelector.CurrentBrush.IsActive = true;
         }
         

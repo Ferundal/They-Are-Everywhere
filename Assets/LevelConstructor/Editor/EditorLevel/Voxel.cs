@@ -13,7 +13,7 @@ namespace LevelConstructor
 
         private LevelConstructor _levelConstructor;
 
-        private Voxel() { }
+        public Voxel() { }
 
         public Vector3 Position
         {
@@ -34,6 +34,7 @@ namespace LevelConstructor
             var voxel = (Voxel)voxelGameObject.AddComponent(typeof(Voxel));
             voxel.VoxelSO = voxelSO;
             voxel._levelConstructor = levelConstructor;
+            levelConstructor.EditorLevel.VoxelMatrix[voxel.VoxelSO.position] = voxel;
 
             voxelGameObject.transform.localPosition = voxel.Position;
 

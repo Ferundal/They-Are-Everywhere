@@ -95,7 +95,7 @@ namespace LevelConstructor
             visualPanel = new VisualPanel(
                 $"{PathUtility.PanelsPath}/NavMeshBakerPanel.uxml",
                 $"{PathUtility.PanelsPath}/Panel.uss");
-            var navMeshBaker = new NavMeshBaker(visualPanel);
+            var navMeshBaker = new NavMeshBaker(visualPanel, this);
             _fsm.Add(navMeshBaker);
         }
 

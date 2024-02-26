@@ -45,6 +45,7 @@ namespace LevelConstructor
 
             IsReload = false;
             if (levelSO == null) return;
+            levelSO.Initialize();
             EditorLevel = new Level(levelSO, this);
         }
     }

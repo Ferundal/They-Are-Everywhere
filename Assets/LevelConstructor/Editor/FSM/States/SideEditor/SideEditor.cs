@@ -36,13 +36,11 @@ namespace LevelConstructor
 
         public override void OnEnter()
         {
-            _levelConstructorEditor._levelConstructor.Handler.OnAfterDeserialize += OnAfterDeserialize;
             base.OnEnter();
         }
 
         public override void OnExit()
         {
-            _levelConstructorEditor._levelConstructor.Handler.OnAfterDeserialize -= OnAfterDeserialize;
             base.OnExit();
         }
 
@@ -75,15 +73,6 @@ namespace LevelConstructor
             {
                 Root.Add(_button);
             }
-        }
-
-        private void OnAfterDeserialize()
-        {
-            if (Root.childCount > 1)
-            {
-                Root.RemoveAt(1);
-            }
-            AssembleOptionalPanels();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace LevelConstructor
         
         public bool Raycast(
             Vector2 screenPosition,
-            ref VoxelHit voxelHit)
+            ref Vector3Int position)
         {
             _ray = HandleUtility.GUIPointToWorldRay(screenPosition);
 
@@ -27,11 +27,9 @@ namespace LevelConstructor
                 && _hitInfo.collider.gameObject.TryGetComponent<Side>(out var side)
                 && side.SideSO.ParentVoxel.ParentShape.ParentLevel == _levelConstructor.levelSO)
             {
-                voxelHit.HitVoxelPosition = side.SideSO.ParentVoxel.position;
-                voxelHit.HitDirection = side.SideSO.sideDirection;
-                voxelHit.HitSide = side;
-                
-                if (_levelConstructor.levelSO.VoxelMatrix[voxelHit.HitVoxelPosition + voxelHit.HitDirection] != null)
+                position = side.SideSO.ParentVoxel.position + side.SideSO.sideDirection;
+
+                if (_levelConstructor.levelSO.VoxelMatrix[position] != null)
                 {
                     return false;
                 }
@@ -42,12 +40,10 @@ namespace LevelConstructor
             if (!FindGroundTouchPosition()) return false;
             
             var cellSize = _levelConstructor.levelSO.voxelSize;
-            voxelHit.HitVoxelPosition = new Vector3Int(
+            position = new Vector3Int(
                 (int)(Math.Ceiling(_groundTouchPosition.x / cellSize) - 1), 
-                -2,
+                -1,
                 (int)(Math.Ceiling(_groundTouchPosition.z / cellSize)) - 1);
-            voxelHit.HitDirection = Vector3Int.up;
-            voxelHit.HitSide = null;
             return true;
 
         }

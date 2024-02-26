@@ -1,3 +1,4 @@
+using System.Linq;
 using LevelGeneration;
 using UnityEditor;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace LevelConstructor
             VoxelType = voxelType;
         }
 
-        public void UseBrush(Shape shape, VoxelHit voxelHit)
+        public void UseBrush(Shape shape)
         {
             if (!IsActive) return;
             
@@ -54,10 +55,21 @@ namespace LevelConstructor
             }
             
             shape.AddVoxel(VoxelType, _position);
-            if (voxelHit.HitSide == null) return;
-            if (voxelHit.HitSide.SideSO.ParentVoxel.ParentShape == shape.shapeSO)
+            
+            // TODO: [#1] Should be done in one array
+            foreach (var direction in LevelGeneration.Voxel.SideDirections)
             {
-                Object.DestroyImmediate(voxelHit.HitSide.gameObject);
+                var neighbourVoxelPosition = direction + _position;
+                
+                var neighbourVoxel = _levelConstructor.EditorLevel.VoxelMatrix[neighbourVoxelPosition];
+                
+                if (neighbourVoxel == null || neighbourVoxel.VoxelSO.ParentShape != shape.shapeSO) continue;
+                
+                var side = neighbourVoxel.sides.FirstOrDefault(side => side.SideSO.sideDirection == -direction);
+                
+                if (side == null) continue;
+                
+                Object.DestroyImmediate(side.gameObject);
             }
         }
 

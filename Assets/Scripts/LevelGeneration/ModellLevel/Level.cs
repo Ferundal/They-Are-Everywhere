@@ -58,6 +58,7 @@ namespace LevelGeneration
                     parentVoxel.Points.Add(pointDirection, newPoint);
                 }
             }
+            
         }
 
         private void LoadVoxelsIntoMatrixAndEstablishConnections()
