@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c5d0f345a817648b8cd2d2b9b14c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileDamage: 50
   force: 1000
   ammoMass: 30
   tooFarAwayTime: 3
