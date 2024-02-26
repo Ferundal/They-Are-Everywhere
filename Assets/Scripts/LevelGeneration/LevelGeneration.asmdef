@@ -1,0 +1,16 @@
+{
+    "name": "LevelGeneration",
+    "rootNamespace": "",
+    "references": [
+        "GUID:377debf90d154373925ce903befaa34f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

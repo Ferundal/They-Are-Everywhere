@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9819f91c854010adba2db044f88678, type: 3}
   m_Name: SimpleScene
   m_EditorClassIdentifier: 
-  size: 1
-  SerializedVoxels: []
+  size: 5
+  voxels:
+  - voxelType: 
+    position: {x: 0, y: 1, z: 0}

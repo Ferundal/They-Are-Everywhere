@@ -1,7 +1,6 @@
 using UnityEditor;
-using UnityEngine;
 
-namespace LevelConstructor.Editor.Utility
+namespace LevelConstructor
 {
     public class PathUtility
     {
@@ -26,5 +25,7 @@ namespace LevelConstructor.Editor.Utility
         }
         
         public static string PanelsPath => $"{PathUtility.GetLevelConstructorFolder()}/Editor/Panels";
+
+        public static string VoxelPrefabsPath => $"{PathUtility.GetLevelConstructorFolder()}/Editor/Prefabs";
     }
 }

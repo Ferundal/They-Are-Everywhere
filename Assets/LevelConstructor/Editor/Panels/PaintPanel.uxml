@@ -1,7 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/LevelConstructor/Editor/Panels/Panel.uss?fileID=7433441132597879392&amp;guid=813b23b3015c32a49a69e4164a1d6325&amp;type=3#Panel" />
-    <ui:Button display-tooltip-when-elided="true" name="navigation-button" class="navigation-button" style="background-image: url(&apos;project://database/Assets/LevelConstructor/Texturies/PaintButtonIcon.png?fileID=2800000&amp;guid=9067063fd763985498a291b766ded209&amp;type=3#PaintButtonIcon&apos;);" />
-    <ui:VisualElement name="body">
-        <ui:Label text="Editor Window" display-tooltip-when-elided="true" name="label" />
-    </ui:VisualElement>
-</ui:UXML>

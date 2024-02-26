@@ -1,39 +1,52 @@
-
-using LevelConstructor.Editor;
-using LevelConstructor.Editor.Level;
-using LevelConstructor.Editor.Level.Serialization;
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 
 namespace LevelConstructor
 {
     [ExecuteInEditMode]
     public class LevelConstructor : MonoBehaviour, ISerializationCallbackReceiver
     {
-        [SerializeField] private SerializedLevel serializedLevel;
+        [SerializeField] public LevelGeneration.Level levelSO;
+        [HideInInspector] public Level EditorLevel;
+        [HideInInspector] public bool IsReload { get; private set; } = false;
 
-        private Level _level;
-        
+        public EventHandler Handler { get; } = new();
 
-        private void Update()
+        private void OnEnable()
         {
-            
+            Handler.OnAfterDeserialize += RebuildEditorLevel;
         }
+
+        private void OnDisable()
+        {
+            Handler.OnAfterDeserialize -= RebuildEditorLevel;
+        }
+
 
         public void OnBeforeSerialize()
         {
-            
+            Handler.HasUnprocessedSerialization = true;
         }
 
         public void OnAfterDeserialize()
         {
-            if (serializedLevel == null) return;
-            _level = serializedLevel.Deserialize();
-            _level.OnChanged += SaveLevel;
+            Handler.HasUnprocessedDeserialization = true;
         }
 
-        private void SaveLevel()
+        
+        private void RebuildEditorLevel()
         {
-            serializedLevel.Serialize(_level);
+            IsReload = true;
+            foreach (Transform child in transform) {
+                DestroyImmediate(child.gameObject);
+            }
+
+            IsReload = false;
+            if (levelSO == null) return;
+            levelSO.Initialize();
+            EditorLevel = new Level(levelSO, this);
         }
     }
 }
