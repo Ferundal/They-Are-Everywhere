@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Barrel
   - CannonBall
+  - Enemy
   layers:
   - Default
   - TransparentFX

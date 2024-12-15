@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/LevelConstructor/Editor/Panels/Panel.uss?fileID=7433441132597879392&amp;guid=813b23b3015c32a49a69e4164a1d6325&amp;type=3#Panel" />
+    <ui:Button display-tooltip-when-elided="true" name="navigation-button" class="navigation-button" style="background-image: url(&apos;project://database/Assets/LevelConstructor/Texturies/side_editor.png?fileID=2800000&amp;guid=ddf81b6a7d11bbf48a790a1702eb71df&amp;type=3#side_editor&apos;);" />
+    <ui:VisualElement name="body">
+        <ui:Label text="Click on the sides to destroy them" display-tooltip-when-elided="true" name="help_text" />
+    </ui:VisualElement>
+</ui:UXML>

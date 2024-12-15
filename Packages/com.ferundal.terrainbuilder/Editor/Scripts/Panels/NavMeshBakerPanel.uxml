@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/LevelConstructor/Editor/Panels/Panel.uss?fileID=7433441132597879392&amp;guid=813b23b3015c32a49a69e4164a1d6325&amp;type=3#Panel" />
+    <ui:Button display-tooltip-when-elided="true" name="navigation-button" class="navigation-button" style="background-image: url(&apos;project://database/Assets/LevelConstructor/Texturies/BakeButton.png?fileID=2800000&amp;guid=12a6894c723f125449a1b04abca81743&amp;type=3#BakeButton&apos;);" />
+    <ui:VisualElement name="body">
+        <ui:Button text="Сreate Surfaces" display-tooltip-when-elided="true" name="create_surfaces" />
+        <ui:Button text="Сreate Sapes" display-tooltip-when-elided="true" name="create_shapes" />
+    </ui:VisualElement>
+</ui:UXML>

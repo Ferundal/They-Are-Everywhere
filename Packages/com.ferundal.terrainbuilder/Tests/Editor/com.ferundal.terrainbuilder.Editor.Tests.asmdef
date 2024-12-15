@@ -1,0 +1,21 @@
+{
+    "name": "com.ferundal.terrainbuilder.Editor.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ab857156d233457fa097aef4cdee49cb"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

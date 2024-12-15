@@ -1,0 +1,16 @@
+{
+    "name": "TerrainGeneration",
+    "rootNamespace": "",
+    "references": [
+        "GUID:578d706ae7e740d194be671d467a3499"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

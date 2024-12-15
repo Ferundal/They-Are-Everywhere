@@ -1,0 +1,13 @@
+{
+  "name": "com.ferundal.terrainbuilder",
+  "version": "1.0.0",
+  "displayName": "Terrain Builder",
+  "description": "Tools for creating terrain, obstacles, and navigation paths.",
+  "unity": "2021.3",
+  "author": {
+    "name": "Mikhail Kustikov",
+    "email": "ferundal@gmail.com",
+    "url": "https://github.com/Ferundal/com.ferundal.terrainbuilder.git"
+  },
+  "testables": ["com.unity.test-framework"]
+}

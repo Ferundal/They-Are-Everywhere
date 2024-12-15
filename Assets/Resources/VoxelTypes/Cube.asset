@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshGeneratorScript: {fileID: 11500000, guid: c2c473ba1cb9403a9b05da1fcc437f27,
     type: 3}
+  Material: {fileID: 2100000, guid: 8392404ef255ca04ba5e49e095e3d8be, type: 2}
